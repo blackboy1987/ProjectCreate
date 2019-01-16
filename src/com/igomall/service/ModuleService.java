@@ -1,7 +1,10 @@
 
 package com.igomall.service;
 
+import com.igomall.Page;
+import com.igomall.Pageable;
 import com.igomall.entity.Module;
+import com.igomall.entity.Project;
 
 /**
  * Service - 角色
@@ -12,5 +15,7 @@ import com.igomall.entity.Module;
 public interface ModuleService extends BaseService<Module, Long> {
 
 	boolean nameExists(String name);
+
+	Page<Module> findPage(Pageable pageable, Project project);
 
 }

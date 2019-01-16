@@ -5,8 +5,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.igomall.Page;
+import com.igomall.Pageable;
 import com.igomall.dao.ModuleDao;
 import com.igomall.entity.Module;
+import com.igomall.entity.Project;
 import com.igomall.service.ModuleService;
 
 /**
@@ -24,6 +27,11 @@ public class ModuleServiceImpl extends BaseServiceImpl<Module, Long> implements 
 	@Override
 	public boolean nameExists(String name) {
 		return moduleDao.exists("name", StringUtils.lowerCase(name));
+	}
+
+	@Override
+	public Page<Module> findPage(Pageable pageable, Project project) {
+		return moduleDao.findPage(pageable,project);
 	}
 	
 }

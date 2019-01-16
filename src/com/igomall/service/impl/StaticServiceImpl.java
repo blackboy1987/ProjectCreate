@@ -6,9 +6,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -24,12 +21,9 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import com.igomall.Template;
 import com.igomall.service.StaticService;
 import com.igomall.service.TemplateService;
-import com.igomall.util.FreeMarkerUtils;
 
 @Service("staticServiceImpl")
 public class StaticServiceImpl implements StaticService, ServletContextAware {
-
-	private static final Integer SITEMAP_MAX_SIZE = 40000;
 
 	private ServletContext servletContext;
 
@@ -57,7 +51,7 @@ public class StaticServiceImpl implements StaticService, ServletContextAware {
 			if (!staticDirectory.exists()) {
 				staticDirectory.mkdirs();
 			}
-			System.out.println(staticFile.getAbsolutePath());
+System.out.println(staticFile.getAbsolutePath());
 			fileOutputStream = new FileOutputStream(staticFile);
 			outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
 			writer = new BufferedWriter(outputStreamWriter);
@@ -73,35 +67,41 @@ public class StaticServiceImpl implements StaticService, ServletContextAware {
 		}
 		return 0;
 	}
+	
+	@Transactional(readOnly = true)
+	public String build1(String templatePath, String staticPath, Map<String, Object> model) {
+		Assert.hasText(templatePath,"");
+		Assert.hasText(staticPath,"");
+
+		FileOutputStream fileOutputStream = null;
+		OutputStreamWriter outputStreamWriter = null;
+		Writer writer = null;
+		try {
+			freemarker.template.Template template = freeMarkerConfigurer.getConfiguration().getTemplate(templatePath);
+			File staticFile = new File(servletContext.getRealPath(staticPath));
+			File staticDirectory = staticFile.getParentFile();
+			if (!staticDirectory.exists()) {
+				staticDirectory.mkdirs();
+			}
+			fileOutputStream = new FileOutputStream(staticFile);
+			outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
+			writer = new BufferedWriter(outputStreamWriter);
+			template.process(model, writer);
+			writer.flush();
+			return staticFile.getAbsolutePath();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			IOUtils.closeQuietly(writer);
+			IOUtils.closeQuietly(outputStreamWriter);
+			IOUtils.closeQuietly(fileOutputStream);
+		}
+		return null;
+	}
 
 	@Transactional(readOnly = true)
 	public int build(String templatePath, String staticPath) {
 		return build(templatePath, staticPath, null);
-	}
-
-	@Transactional(readOnly = true)
-	public int buildIndex() {
-		Template template = templateService.get("index");
-		return build(template.getTemplatePath(), template.getStaticPath());
-	}
-
-	@Transactional(readOnly = true)
-	public int buildSitemap() {
-		int buildCount = 0;
-		Template sitemapIndexTemplate = templateService.get("sitemapIndex");
-		Template sitemapTemplate = templateService.get("sitemap");
-		Map<String, Object> model = new HashMap<String, Object>();
-		List<String> staticPaths = new ArrayList<String>();
-		for (int step = 0, index = 0, first = 0, count = SITEMAP_MAX_SIZE;;) {
-			try {
-				model.put("index", index);
-				String templatePath = sitemapTemplate.getTemplatePath();
-				String staticPath = FreeMarkerUtils.process(sitemapTemplate.getStaticPath(), model);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		//return buildCount;
 	}
 
 	@Transactional(readOnly = true)
@@ -117,8 +117,6 @@ public class StaticServiceImpl implements StaticService, ServletContextAware {
 	@Transactional(readOnly = true)
 	public int buildAll() {
 		int buildCount = 0;
-		buildIndex();
-		buildSitemap();
 		buildOther();
 		return buildCount;
 	}
@@ -133,12 +131,6 @@ public class StaticServiceImpl implements StaticService, ServletContextAware {
 			return 1;
 		}
 		return 0;
-	}
-
-	@Transactional(readOnly = true)
-	public int deleteIndex() {
-		Template template = templateService.get("index");
-		return delete(template.getStaticPath());
 	}
 
 	@Transactional(readOnly = true)

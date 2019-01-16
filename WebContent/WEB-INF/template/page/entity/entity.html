@@ -1,1 +1,55 @@
-${name}
+
+package com.igomall.entity;
+
+[#list module.properties as property]
+[#if property.type=="Date"]
+import java.util.Date;
+[#elseif property.type=="BigDecimal"]
+import java.math.BigDecimal;
+[/#if]
+[/#list]
+
+import javax.persistence.Entity;
+
+/**
+ * Entity - 管理员
+ * 
+ * @author IGOMALL  Team
+ * @version 1.0
+ */
+@Entity
+public class ${name} extends BaseEntity<Long> {
+
+
+	[#list module.properties as property]	
+	/**
+	 * ${property.memo}
+	 */
+	private ${property.type} ${property.name};
+	
+	[/#list]
+	
+	[#list module.properties as property]
+	
+	/**
+	 * 设置用户名
+	 * 
+	 * @param username
+	 *            用户名
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * 获取密码
+	 * 
+	 * @return 密码
+	 */
+	public String getPassword() {
+		return password;
+	}
+	[/#list ]
+	
+
+}

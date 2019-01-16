@@ -1,8 +1,4 @@
-/*
 
-
-
- */
 package com.igomall.dao.impl;
 
 import org.springframework.stereotype.Repository;

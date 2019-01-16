@@ -11,6 +11,7 @@
 		[#include "/admin/include/css/global_theme_styles.html"]
 		[#include "/admin/include/css/page_vendors_styles.html"]
 		[#include "/admin/include/css/shortcut.html"]
+		<link href="${base}/resources/admin/css/custom.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
 		<div class="m-grid m-grid--hor m-grid--root m-page">
@@ -19,13 +20,10 @@
 				[#include "/admin/include/left_aside.html"]
 				<div class="m-grid__item m-grid__item--fluid m-wrapper">
 					<div class="m-content">
-						<div class="m-portlet m-portlet--tab">
+						<div class="m-portlet m-portlet--mobile">
 							<div class="m-portlet__head">
 								<div class="m-portlet__head-caption">
 									<div class="m-portlet__head-title">
-										<span class="m-portlet__head-icon m--hide">
-											<i class="la la-gear"></i>
-										</span>
 										<h3 class="m-portlet__head-text">
 											标题
 										</h3>
@@ -33,7 +31,18 @@
 								</div>
 							</div>
 							<div class="m-portlet__body">
-								内容
+								<div class="m-form m-form--label-align-right m--margin-top m--margin-bottom-10">
+									<div class="row align-items-center">
+										<div class="col-xl-6 flex-first-xl-down">
+											<a href="#" class="btn btn-primary m-btn m-btn--pill m-btn--custom m-btn--icon m-btn--air">
+												<span>New Order</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<!--begin: Datatable -->
+								<div class="m_datatable" id="locked_both"></div>
+								<!--end: Datatable -->
 							</div>
 						</div>
 					</div>
@@ -49,6 +58,6 @@
 		[#include "/admin/include/js/global_optional_vendors.html"]
 		[#include "/admin/include/js/global_theme_bundle.html"]
 		[#include "/admin/include/js/page_vendors.html"]
-		<script src="${base}/resources/default/assets/app/js/dashboard.js" type="text/javascript"></script>
+		<script src="${base}/resources/admin/js/project/list.js" type="text/javascript"></script>
 	</body>
 </html>

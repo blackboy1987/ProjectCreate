@@ -1,5 +1,5 @@
 
-package com.igomall.controller.admin;
+package com.igomall.controller.api;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.igomall.service.StaticService;
 
-@Controller("adminStaticController")
-@RequestMapping("/admin/static")
+@Controller("apiStaticController")
+@RequestMapping("/api/static")
 public class StaticController extends BaseController {
 
 	public enum BuildType {

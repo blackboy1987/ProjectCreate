@@ -4,6 +4,9 @@ package com.igomall.entity;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Entity - 模块里面的属性。对应与数据库里面的表中的字段
@@ -22,27 +25,28 @@ public class Property extends BaseEntity<Long> {
 	/**
      * 名称
      */
+	@JsonView({ListView.class,EditView.class})
     private String name;
 
     /**
      * 类型
      * 0：Integer
-     * 2：Long
-     * 3：Double
-     * 4：Float
-     * 5：BigDecimal
-     * 6：Boolean
-     * 7：Date
-     * 8：String
+     * 1：Long
+     * 2：Double
+     * 3：Float
+     * 4：BigDecimal
+     * 5：Boolean
+     * 6：Date
+     * 7：String
      * 9：
      * 10：
      * 11：
      */
-    private Integer type;
+	@JsonView({ListView.class,EditView.class})
+    private String type;
 
-    private Boolean isNull;
-
-    private String description;
+	@JsonView({ListView.class,EditView.class})
+    private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Module module;
@@ -56,35 +60,68 @@ public class Property extends BaseEntity<Long> {
         this.name = name;
     }
 
-    public Integer getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public Boolean getNull() {
-        return isNull;
-    }
+    public String getMemo() {
+		return memo;
+	}
 
-    public void setNull(Boolean aNull) {
-        isNull = aNull;
-    }
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Module getModule() {
+	public Module getModule() {
         return module;
     }
 
     public void setModule(Module module) {
         this.module = module;
     }
+    
+    @Transient
+	@JsonView({ListView.class})
+    public String getModuleName() {
+    	if(module!=null) {
+    		return module.getName();
+    	}
+    	return null;
+    }
+    
+    @Transient
+	@JsonView({ListView.class,EditView.class})
+    public Long getModuleId() {
+    	if(module!=null) {
+    		return module.getId();
+    	}
+    	return null;
+    }
+    
+    @Transient
+	@JsonView({ListView.class})
+    public String getProjectName() {
+    	if(module!=null) {
+    		return module.getProjectName();
+    	}
+    	return null;
+    }
+    
+    @Transient
+	@JsonView({ListView.class})
+    public Long getProjectId() {
+    	if(module!=null) {
+    		return module.getProjectId();
+    	}
+    	return null;
+    }
+    
+    
+    public interface ListView extends BaseView {};
+    
+    public interface EditView extends BaseView{}
 }

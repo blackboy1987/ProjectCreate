@@ -3,6 +3,8 @@ package com.igomall.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +21,8 @@ import java.util.Set;
 @Entity
 public class Project extends BaseEntity<Long> {
 
+	
+
 	/**
 	 * 
 	 */
@@ -29,10 +33,22 @@ public class Project extends BaseEntity<Long> {
 	 */
 	@NotEmpty
 	@Column(nullable = false)
+	@JsonView({ListView.class,EditView.class})
 	private String name;
+
+	@JsonView({ListView.class,EditView.class})
+	private String memo;
 
 	@OneToMany(mappedBy = "project",fetch = FetchType.LAZY)
 	private Set<Module> modules = new HashSet<>();
+	
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
 
 	public String getName() {
 		return name;
@@ -48,5 +64,13 @@ public class Project extends BaseEntity<Long> {
 
 	public void setModules(Set<Module> modules) {
 		this.modules = modules;
+	}
+	
+	
+	public interface ListView extends BaseView{
+
+	}
+	public interface EditView extends BaseView{
+
 	}
 }
