@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>${message("admin.setting.edit")}</title>
+<meta name="author" content="" />
+<meta name="copyright" content="" />
+<link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/resources/admin/js/jquery.tools.js"></script>
+<script type="text/javascript" src="${base}/resources/admin/js/jquery.validate.js"></script>
+<script type="text/javascript" src="${base}/resources/admin/js/webuploader.js"></script>
+<script type="text/javascript" src="${base}/resources/admin/js/common.js"></script>
+<script type="text/javascript" src="${base}/resources/admin/js/input.js"></script>
+<script type="text/javascript">
+$().ready(function() {
+
+	var $inputForm = $("#inputForm");
+	var $filePicker = $("a.filePicker");
+	var $smtpHost = $("#smtpHost");
+	var $smtpPort = $("#smtpPort");
+	var $smtpUsername = $("#smtpUsername");
+	var $smtpPassword = $("#smtpPassword");
+	var $smtpSSLEnabled = $("#smtpSSLEnabled");
+	var $smtpFromMail = $("#smtpFromMail");
+	var $testSmtp = $("#testSmtp");
+	var $toMail = $("#toMail");
+	var $sendMail = $("#sendMail");
+	var $testSmtpStatus = $("#testSmtpStatus");
+	var $smsBalance = $("#smsBalance");
+	
+	[@flash_message /]
+	
+	$filePicker.uploader();
+	
+	// 邮件测试
+	$testSmtp.click(function() {
+		$testSmtp.closest("tr").hide();
+		$toMail.closest("tr").show();
+	});
+	
+	// 发送邮件
+	$sendMail.click(function() {
+		$toMail.removeClass("ignore");
+		var validator = $inputForm.validate();
+		var isValid = validator.element($smtpFromMail) & validator.element($smtpHost) & validator.element($smtpPort) & validator.element($smtpUsername) & validator.element($toMail);
+		$toMail.addClass("ignore");
+		$.ajax({
+			url: "test_smtp",
+			type: "POST",
+			data: {smtpHost: $smtpHost.val(), smtpPort: $smtpPort.val(), smtpUsername: $smtpUsername.val(), smtpPassword: $smtpPassword.val(), smtpSSLEnabled: $smtpSSLEnabled.prop("checked"), smtpFromMail: $smtpFromMail.val(), toMail: $toMail.val()},
+			dataType: "json",
+			cache: false,
+			beforeSend: function() {
+				if (!isValid) {
+					return false;
+				}
+				$testSmtpStatus.html('<span class="loadingIcon">&nbsp;<\/span>${message("admin.setting.sendMailLoading")}');
+				$sendMail.prop("disabled", true);
+			},
+			success: function(message) {
+				$testSmtpStatus.empty();
+				$sendMail.prop("disabled", false);
+				$.message(message);
+			}
+		});
+	});
+	
+	// 短信余额查询
+	$smsBalance.click(function() {
+		var $this = $(this);
+		$.ajax({
+			url: "sms_balance",
+			type: "GET",
+			dataType: "json",
+			cache: false,
+			beforeSend: function() {
+				$this.prop("disabled", true).after('<span class="loadingIcon">&nbsp;<\/span>');
+			},
+			success: function(message) {
+				$this.prop("disabled", false).nextAll("span").remove();
+				if (message.type == "success") {
+					$.dialog({
+						type: "warn",
+						content: message.content,
+						modal: true,
+						ok: null,
+						cancel: null
+					});
+				} else {
+					$.message(message);
+				}
+			}
+		});
+		return false;
+	});
+	
+	$.validator.addMethod("compareLength", 
+		function(value, element, param) {
+			return this.optional(element) || $.trim(value) == "" || $.trim($(param).val()) == "" || parseFloat(value) >= parseFloat($(param).val());
+		},
+		"${message("admin.setting.compareLength")}"
+	);
+	
+	$.validator.addMethod("requiredTo", 
+		function(value, element, param) {
+			var parameterValue = $(param).val();
+			if ($.trim(parameterValue) == "" || ($.trim(parameterValue) != "" && $.trim(value) != "")) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		"${message("admin.setting.requiredTo")}"
+	);
+	
+	$.validator.addMethod("comparePointScale", 
+		function(value, element, param) {
+			var parameterValue = $(param).val();
+			if ($.trim(parameterValue) == "" || $.trim(value) == "") {
+				return true;
+			}
+			try {
+				return parseFloat(parameterValue) <= parseFloat(value);
+			} catch(e) {
+				return false;
+			}
+		},
+		"${message("admin.setting.comparePointScale")}"
+	);
+	
+	// 表单验证
+	$inputForm.validate({
+		rules: {
+			siteName: "required",
+			siteUrl: {
+				required: true,
+				pattern: /^(http:\/\/|https:\/\/).*$/i
+			},
+			logo: {
+				required: true,
+				pattern: /^(http:\/\/|https:\/\/|\/).*$/i
+			},
+			email: "email",
+			largeProductImageWidth: {
+				required: true,
+				integer: true,
+				min: 1
+			},
+			largeProductImageHeight: {
+				required: true,
+				integer: true,
+				min: 1
+			},
+			mediumProductImageWidth: {
+				required: true,
+				integer: true,
+				min: 1
+			},
+			mediumProductImageHeight: {
+				required: true,
+				integer: true,
+				min: 1
+			},
+			thumbnailProductImageWidth: {
+				required: true,
+				integer: true,
+				min: 1
+			},
+			thumbnailProductImageHeight: {
+				required: true,
+				integer: true,
+				min: 1
+			},
+			defaultLargeProductImage: {
+				required: true,
+				pattern: /^(http:\/\/|https:\/\/|\/).*$/i
+			},
+			defaultMediumProductImage: {
+				required: true,
+				pattern: /^(http:\/\/|https:\/\/|\/).*$/i
+			},
+			defaultThumbnailProductImage: {
+				required: true,
+				pattern: /^(http:\/\/|https:\/\/|\/).*$/i
+			},
+			watermarkAlpha: {
+				required: true,
+				digits: true,
+				max: 100
+			},
+			watermarkImageFile: {
+				extension: "${setting.uploadImageExtension}"
+			},
+			defaultMarketPriceScale: {
+				required: true,
+				min: 0,
+				decimal: {
+					integer: 3,
+					fraction: 3
+				}
+			},
+			registerPoint: {
+				required: true,
+				integer: true,
+				min: 0
+			},
+			maxFailedLoginAttempts: {
+				required: true,
+				integer: true,
+				min: 1
+			},
+			passwordLockTime: {
+				required: true,
+				digits: true
+			},
+			safeKeyExpiryTime: {
+				required: true,
+				digits: true
+			},
+			uploadMaxSize: {
+				required: true,
+				digits: true
+			},
+			imageUploadPath: "required",
+			mediaUploadPath: "required",
+			fileUploadPath: "required",
+			smtpFromMail: {
+				required: true,
+				email: true
+			},
+			smtpHost: "required",
+			smtpPort: {
+				required: true,
+				digits: true
+			},
+			smtpUsername: "required",
+			toMail: {
+				required: true,
+				email: true
+			},
+			currencySign: "required",
+			currencyUnit: "required",
+			stockAlertCount: {
+				required: true,
+				digits: true
+			},
+			automaticReceiveTime: {
+				required: true,
+				digits: true
+			},
+			defaultPointScale: {
+				required: true,
+				min: 0,
+				decimal: {
+					integer: 3,
+					fraction: 3
+				}
+			},
+			maxPointScale: {
+				required: true,
+				min: 0,
+				decimal: {
+					integer: 3,
+					fraction: 3
+				},
+				comparePointScale: "#defaultPointScale"
+			},
+			taxRate: {
+				required: true,
+				min: 0,
+				decimal: {
+					integer: 3,
+					fraction: 3
+				}
+			},
+			cookiePath: "required",
+			smsKey: {
+				requiredTo: "#smsSn"
+			},
+			orderRate: {
+				required: true,
+				min: 0,
+				max: 100,
+				decimal: {
+					integer: 3,
+					fraction: 6
+				}
+			},
+			bonusRate: {
+				required: true,
+				min: "0",
+				max: 10000,
+				decimal: {
+					integer: 5,
+					fraction: 6
+				}
+			},
+			minBonusRate: {
+				required: true,
+				min: "0",
+				max: 10000,
+				decimal: {
+					integer: 5,
+					fraction: 6
+				}
+			},
+			maxBonusRate: {
+				required: true,
+				min: "0",
+				max: 10000,
+				decimal: {
+					integer: 5,
+					fraction: 6
+				}
+			},
+			point3Price:{
+				required: true,
+				positive: true,
+				decimal: {
+					integer: 7,
+					fraction: 20
+				}
+			},
+			defaultParent:{
+				required: true,
+				minlength: 3,
+				pattern: /^[0-9a-zA-Z_\u4e00-\u9fa5]+$/,
+				notAllNumber: true,
+				remote: {
+					url: "${base}/member/register/check_parent",
+					cache: false
+				}
+			}
+		},
+		messages:{
+			parent: {
+				pattern: "${message("member.register.usernameIllegal")}",
+				remote: "会员不存在"
+			},
+		}
+	});
+	$.validator.addClassRules({
+		withdrawBalanceRate: {
+			required: true,
+			min: -1,
+			decimal: {
+				integer: 3,
+				fraction: 3
+			}
+		}
+	});
+	
+	$(".bonus").click(function(){
+		$.dialog({
+			type: "warn",
+			title:"手动分红测试",
+			content: "确认执行该操作？",
+			ok: message("admin.dialog.ok"),
+			cancel: message("admin.dialog.cancel"),
+			onOk: function() {
+				$.ajax({
+					url: "testBonus",
+					type: "POST",
+					dataType: "json",
+					cache: false,
+					success: function(message) {
+						$.message(message);
+					}
+				});
+			}
+		});
+		return false;
+	});
+});
+</script>
+</head>
+<body>
+	<div class="breadcrumb">
+		<a href="${base}/admin/common/index">${message("admin.breadcrumb.home")}</a> &raquo; ${message("admin.setting.edit")}
+	</div>
+	<form id="inputForm" action="update" method="post" enctype="multipart/form-data">
+		<ul id="tab" class="tab">
+			<li>
+				<input type="button" value="${message("admin.setting.base")}" />
+			</li>
+			<li>
+				<input type="button" value="${message("admin.setting.show")}" />
+			</li>
+			<li>
+				<input type="button" value="${message("admin.setting.upload")}" />
+			</li>
+			<li>
+				<input type="button" value="${message("admin.setting.registerSecurity")}" />
+			</li>
+			<li>
+				<input type="button" value="${message("admin.setting.mail")}" />
+			</li>
+			<li>
+				<input type="button" value="${message("admin.setting.bonusSystem")}" />
+			</li>
+			<li>
+				<input type="button" value="${message("admin.setting.sms")}" />
+			</li>
+			<li>
+				<input type="button" value="${message("admin.setting.other")}" />
+			</li>
+		</ul>
+		[#include "/admin/setting/include/base.html" /]
+		[#include "/admin/setting/include/show.html" /]
+		[#include "/admin/setting/include/upload.html" /]
+		[#include "/admin/setting/include/registerSecurity.html" /]
+		[#include "/admin/setting/include/mail.html" /]
+		[#include "/admin/setting/include/bonusSystem.html" /]
+		[#include "/admin/setting/include/sms.html" /]
+		[#include "/admin/setting/include/other.html" /]
+		<table class="input">
+			<tr>
+				<th>
+					&nbsp;
+				</th>
+				<td>
+					<input type="submit" class="button" value="${message("admin.common.submit")}" />
+					<input type="button" class="button" value="${message("admin.common.back")}" onclick="history.back(); return false;" />
+					<a href="javascript:void(0);" class="button bonus">分红测试</a>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

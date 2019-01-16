@@ -1,0 +1,71 @@
+<table class="input tabContent">
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.smtpHost")}:
+		</th>
+		<td>
+			<input type="text" id="smtpHost" name="smtpHost" class="text" value="${setting.smtpHost}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.smtpPort")}:
+		</th>
+		<td>
+			<input type="text" id="smtpPort" name="smtpPort" class="text" value="${setting.smtpPort}" maxlength="9" title="${message("admin.setting.smtpPorteTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.smtpUsername")}:
+		</th>
+		<td>
+			<input type="text" id="smtpUsername" name="smtpUsername" class="text" value="${setting.smtpUsername}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.smtpPassword")}:
+		</th>
+		<td>
+			<input type="password" id="smtpPassword" name="smtpPassword" class="text" maxlength="200" autocomplete="off" title="${message("admin.setting.smtpPasswordTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.smtpSSLEnabled")}:
+		</th>
+		<td>
+			<input type="checkbox" id="smtpSSLEnabled" name="smtpSSLEnabled" value="true"[#if setting.smtpSSLEnabled] checked="checked"[/#if] />
+			<input type="hidden" name="_smtpSSLEnabled" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.smtpFromMail")}:
+		</th>
+		<td>
+			<input type="text" id="smtpFromMail" name="smtpFromMail" class="text" value="${setting.smtpFromMail}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			&nbsp;
+		</th>
+		<td>
+			<a href="javascript:;" id="testSmtp">[${message("admin.setting.testSmtp")}]</a>
+		</td>
+	</tr>
+	<tr class="hidden">
+		<th>
+			${message("admin.setting.toMail")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="text" id="toMail" name="toMail" class="text ignore" maxlength="200" />
+				<input type="button" id="sendMail" class="button" value="${message("admin.setting.sendMail")}" />
+				<span id="testSmtpStatus">&nbsp;</span>
+			</span>
+		</td>
+	</tr>
+</table>

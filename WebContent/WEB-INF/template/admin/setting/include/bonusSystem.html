@@ -1,0 +1,230 @@
+
+<table class="input tabContent">
+	<tr>
+		<th rowspan="2">
+			<span class="requiredField">*</span>${message("Setting.sign")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="checkbox" name="isOpenSign" value="true"[#if setting.isOpenSign] checked="checked"[/#if] />开启签到
+				<input type="hidden" name="_isOpenSign" value="false" />
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			${message("Setting.signType")}:
+			<select class="text" name="signType" style="width:80px;">
+				[#list signTypes as signType]
+				<option value="${signType}"[#if signType==setting.signType] selected="selected" [/#if]>${message("Setting.SignType."+signType)}</option>
+				[/#list]
+			</select>
+			签到奖金:
+			<input type="text" name="signWard" class="text" value="${setting.signWard}" maxlength="9" style="width: 50px;" title="${message("admin.setting.heightTitle")}" />
+			账户类型:
+			<select class="text" name="signWardToAccountType" style="width:100px;">
+				[#list signWardToAccountTypes as signWardToAccountType]
+				<option value="${signWardToAccountType}"[#if signWardToAccountType==setting.signWardToAccountType] selected="selected" [/#if]>${message("Member."+signWardToAccountType)}</option>
+				[/#list]
+			</select>
+			
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>注册奖励:
+		</th>
+		<td>
+			<span class="requiredField">*</span>${message("Setting.registerPoint")}:
+			<input type="text" name="registerPoint" class="text" value="${setting.registerPoint}" maxlength="9" style="width:100px;"/>
+			<select class="text select2" name="registerPointType" style="width:120px;">
+				<option value="">选择账户类型</option>
+				<option value="balance"[#if setting.registerPointType=="balance"] selected="selected" [/#if]>${message("Member.balance")}</option>
+				<option value="balance1"[#if setting.registerPointType=="balance1"] selected="selected" [/#if]>${message("Member.balance1")}</option>
+				<option value="balance2"[#if setting.registerPointType=="balance2"] selected="selected" [/#if]>${message("Member.balance2")}</option>
+				<option value="balance3"[#if setting.registerPointType=="balance3"] selected="selected" [/#if]>${message("Member.balance3")}</option>
+				<option value="point"[#if setting.registerPointType=="point"] selected="selected" [/#if]>${message("Member.point")}</option>
+				<option value="point1"[#if setting.registerPointType=="point1"] selected="selected" [/#if]>${message("Member.point1")}</option>
+				<option value="point2"[#if setting.registerPointType=="point2"] selected="selected" [/#if]>${message("Member.point2")}</option>
+				<option value="point3"[#if setting.registerPointType=="point3"] selected="selected" [/#if]>${message("Member.point3")}</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.orderRate")}:
+		</th>
+		<td>
+			<input type="text" name="orderRate" class="text" value="${setting.orderRate}" style="width:100px;"/><span class="tips" style="font-size:18px;color:red">%</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Member.point3")}价格:
+		</th>
+		<td>
+			<input type="text" name="point3Price" class="text" value="${setting.point3Price}" style="width:100px;"/><span class="tips" style="font-size:18px;color:red">说明：1元可以购买多少的库存积分</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.bonusRate")}:
+		</th>
+		<td>
+			<input type="text" id="bonusRate" name="bonusRate" class="text" value="${setting.bonusRate}" style="width:100px;" /><span class="tips" style="font-size:18px;color:red">‱</span>
+			${message("admin.setting.width")}:
+			<input type="text" id="minBonusRate" name="minBonusRate" class="text" value="${setting.minBonusRate}" style="width:100px;" maxlength="9" style="width: 50px;" title="最小值" /><span class="tips" style="font-size:18px;color:red">‱</span>
+			${message("admin.setting.height")}:
+			<input type="text" id="maxBonusRate" name="maxBonusRate" class="text" value="${setting.maxBonusRate}" style="width:100px;" maxlength="9" style="width: 50px;" title="最大值" /><span class="tips" style="font-size:18px;color:red">‱</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			提现
+		</th>
+		<td>
+			<table class="input" border="1">
+				[#assign balanceTypeIndex=0 /]
+				[#list balanceTypes?chunk(4) as row]
+				<tr>
+					[#list row as balanceType]
+						<td border="1">
+							<span style="width:100px;display: inherit;">
+							<input type="checkbox" style="display:none;" val="balanceType" name="withdrawBalanceTypes" value="${balanceType}" checked="checked"/>
+							${message("Member."+balanceType)}
+							</span>
+							<span style="display: inherit;">
+							手续费：
+							<input type="text" class="text" name="withdrawBalanceRate" value="${setting.withdrawBalanceRates[balanceTypeIndex]}" style="width:80px;"/>
+							</span>
+						</td>
+						[#assign balanceTypeIndex = balanceTypeIndex+1 /]
+					[/#list]
+				</tr>
+				[/#list]
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			消费
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="checkbox" name="isOpenConsumeRebate" value="true"[#if setting.isOpenConsumeRebate==true] checked="checked" [/#if]/>开启购物送赠送
+				<select class="text select2" name="consumeRebateBalance" style="width:100px;">
+					<option value="balance"[#if setting.consumeRebateBalance=="balance"] selected="selected" [/#if]>${message("Member.balance")}</option>
+					<option value="balance1"[#if setting.consumeRebateBalance=="balance1"] selected="selected" [/#if]>${message("Member.balance1")}</option>
+					<option value="balance2"[#if setting.consumeRebateBalance=="balance2"] selected="selected" [/#if]>${message("Member.balance2")}</option>
+					<option value="balance3"[#if setting.consumeRebateBalance=="balance3"] selected="selected" [/#if]>${message("Member.balance3")}</option>
+					<option value="point"[#if setting.consumeRebateBalance=="point"] selected="selected" [/#if]>${message("Member.point")}</option>
+					<option value="point1"[#if setting.consumeRebateBalance=="point1"] selected="selected" [/#if]>${message("Member.point1")}</option>
+					<option value="point2"[#if setting.consumeRebateBalance=="point2"] selected="selected" [/#if]>${message("Member.point2")}</option>
+					<option value="point3"[#if setting.consumeRebateBalance=="point3"] selected="selected" [/#if]>${message("Member.point3")}</option>
+				</select>，比例：
+				<input type="text" class="text " name="consumeRebate" value="${setting.consumeRebate}" style="width:80px;"/><span class="tips" style="color:red">如是按照百分比返，请输入10%（返回消费金额的10%）</span>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			账户转换
+			<br/>
+		</th>
+		<td>
+			<table>
+				[#assign index=0]
+				[#list exchangeRecordTypes?chunk(4) as row]
+				<tr>
+					[#list row as exchangeRecordType]
+					<td  [#if setting.exchangeRecordTypes?? && setting.exchangeRecordTypes?seq_contains(exchangeRecordType)] class=""[#else]class="hidden" [/#if]>
+						<table class="input" border="1">
+							<tr>
+								<td style="width:150px;">
+									<input type="checkbox" name="exchangeRecordTypes" class="checkbox" [#if setting.exchangeRecordTypes?? && setting.exchangeRecordTypes?seq_contains(exchangeRecordType)] checked="checked" [/#if] value="${exchangeRecordType}"/>${message("ExchangeRecordType."+exchangeRecordType)}
+								</td>
+								<td>转换比率:<input type="text" name="exchangeRecordRate" class="text" style="width:50px;" value="${(setting.exchangeRecordRates[index])!1}"/></td>
+								<td>手续费:<input type="text" name="exchangeRecordFeeRate" class="text" style="width:50px;" value="${(setting.exchangeRecordFeeRates[index])!0}"/></td>
+									
+							</tr>
+						</table>
+					</td>
+					[#assign index=index+1]
+					[/#list]
+				</tr>
+				[/#list]
+			</table>
+		</td>
+	</tr>
+	[#list memberRanks as memberRank]
+	<tr>
+		[#if memberRank_index==0]
+		<th rowspan="${memberRanks.size()!1}">
+			推荐
+		</th>
+		[/#if]
+		<td>
+			<table class="input" border="1">
+				<tr>
+					<td style="width:100px;">${memberRank.name}</td>
+					<td>
+						提成:
+						<input type="text" name="leadRate" class="text" style="width:50px;" value="${(setting.leadRates[memberRank_index])!0}"/>
+						<span class="tips">如果是按百分比，请输入××%</span>
+					</td>
+					<td>
+						账户：
+						<select class="text select2" name="leadRateBalance" style="width:100px;">
+							<option value="balance"[#if setting.leadRateBalances[memberRank_index]=="balance"] selected="selected" [/#if]>${message("Member.balance")}</option>
+							<option value="balance1"[#if setting.leadRateBalances[memberRank_index]=="balance1"] selected="selected" [/#if]>${message("Member.balance1")}</option>
+							<option value="balance2"[#if setting.leadRateBalances[memberRank_index]=="balance2"] selected="selected" [/#if]>${message("Member.balance2")}</option>
+							<option value="balance3"[#if setting.leadRateBalances[memberRank_index]=="balance3"] selected="selected" [/#if]>${message("Member.balance3")}</option>
+							<option value="point"[#if setting.leadRateBalances[memberRank_index]=="point"] selected="selected" [/#if]>${message("Member.point")}</option>
+							<option value="point1"[#if setting.leadRateBalances[memberRank_index]=="point1"] selected="selected" [/#if]>${message("Member.point1")}</option>
+							<option value="point2"[#if setting.leadRateBalances[memberRank_index]=="point2"] selected="selected" [/#if]>${message("Member.point2")}</option>
+							<option value="point3"[#if setting.leadRateBalances[memberRank_index]=="point3"] selected="selected" [/#if]>${message("Member.point3")}</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	[/#list]
+	<tr>
+		<th rowspan="2">
+			其他
+		</th>
+		<td>
+			交易账户余额高于（包括等于）<input type="text" name="minBalance2" class="text" style="width:80px;" value="${setting.minBalance2}"/>,
+			每天赠送 <input type="text" name="minBalance2Rate" class="text" style="width:80px;" value="${setting.minBalance2Rate}"/> 给 
+			<select class="text select2" name="minBalance2Type" style="width:100px;">
+				<option value="balance"[#if setting.minBalance2Type=="balance"] selected="selected" [/#if]>${message("Member.balance")}</option>
+				<option value="balance1"[#if setting.minBalance2Type=="balance1"] selected="selected" [/#if]>${message("Member.balance1")}</option>
+				<option value="balance2"[#if setting.minBalance2Type=="balance2"] selected="selected" [/#if]>${message("Member.balance2")}</option>
+				<option value="balance3"[#if setting.minBalance2Type=="balance3"] selected="selected" [/#if]>${message("Member.balance3")}</option>
+				<option value="point"[#if setting.minBalance2Type=="point"] selected="selected" [/#if]>${message("Member.point")}</option>
+				<option value="point1"[#if setting.minBalance2Type=="point1"] selected="selected" [/#if]>${message("Member.point1")}</option>
+				<option value="point2"[#if setting.minBalance2Type=="point2"] selected="selected" [/#if]>${message("Member.point2")}</option>
+				<option value="point3"[#if setting.minBalance2Type=="point3"] selected="selected" [/#if]>${message("Member.point3")}</option>
+			</select>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td>
+			${message("Member.point3")}单笔充值（包括等于）<input type="text" name="minPoint3Recharge" class="text" style="width:80px;" value="${setting.minPoint3Recharge}"/>,
+			赠送 <input type="text" name="minPoint3RechargeRate" class="text" style="width:80px;" value="${setting.minPoint3RechargeRate}"/> 给 
+			<select class="text select2" name="minPoint3RechargeType" style="width:100px;">
+				<option value="balance"[#if setting.minPoint3RechargeType=="balance"] selected="selected" [/#if]>${message("Member.balance")}</option>
+				<option value="balance1"[#if setting.minPoint3RechargeType=="balance1"] selected="selected" [/#if]>${message("Member.balance1")}</option>
+				<option value="balance2"[#if setting.minPoint3RechargeType=="balance2"] selected="selected" [/#if]>${message("Member.balance2")}</option>
+				<option value="balance3"[#if setting.minPoint3RechargeType=="balance3"] selected="selected" [/#if]>${message("Member.balance3")}</option>
+				<option value="point"[#if setting.minPoint3RechargeType=="point"] selected="selected" [/#if]>${message("Member.point")}</option>
+				<option value="point1"[#if setting.minPoint3RechargeType=="point1"] selected="selected" [/#if]>${message("Member.point1")}</option>
+				<option value="point2"[#if setting.minPoint3RechargeType=="point2"] selected="selected" [/#if]>${message("Member.point2")}</option>
+				<option value="point3"[#if setting.minPoint3RechargeType=="point3"] selected="selected" [/#if]>${message("Member.point3")}</option>
+			</select>
+		</td>
+	</tr>
+</table>

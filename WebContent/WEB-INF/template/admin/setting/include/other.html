@@ -1,0 +1,191 @@
+<table class="input tabContent">
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.currencySign")}:
+		</th>
+		<td>
+			<input type="text" name="currencySign" class="text" value="${setting.currencySign}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.currencyUnit")}:
+		</th>
+		<td>
+			<input type="text" name="currencyUnit" class="text" value="${setting.currencyUnit}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.stockAlertCount")}:
+		</th>
+		<td>
+			<input type="text" name="stockAlertCount" class="text" value="${setting.stockAlertCount}" maxlength="9" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.automaticReceiveTime")}:
+		</th>
+		<td>
+			<input type="text" name="automaticReceiveTime" class="text" value="${setting.automaticReceiveTime}" maxlength="9" title="${message("admin.setting.automaticReceiveTimeTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.stockAllocationTime")}:
+		</th>
+		<td>
+			<select name="stockAllocationTime">
+				[#list stockAllocationTimes as stockAllocationTime]
+					<option value="${stockAllocationTime}"[#if stockAllocationTime == setting.stockAllocationTime] selected="selected"[/#if]>${message("Setting.StockAllocationTime." + stockAllocationTime)}</option>
+				[/#list]
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.defaultPointScale")}:
+		</th>
+		<td>
+			<input type="text" id="defaultPointScale" name="defaultPointScale" class="text" value="${setting.defaultPointScale}" maxlength="7" title="${message("admin.setting.defaultPointScaleTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.maxPointScale")}:
+		</th>
+		<td>
+			<input type="text" name="maxPointScale" class="text" value="${setting.maxPointScale}" maxlength="7" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isDevelopmentEnabled")}:
+		</th>
+		<td>
+			<label title="${message("admin.setting.isDevelopmentEnabledTitle")}">
+				<input type="checkbox" name="isDevelopmentEnabled" value="true"[#if setting.isDevelopmentEnabled] checked="checked"[/#if] />
+				<input type="hidden" name="_isDevelopmentEnabled" value="false" />
+			</label>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isReviewEnabled")}:
+		</th>
+		<td>
+			<input type="checkbox" name="isReviewEnabled" value="true"[#if setting.isReviewEnabled] checked="checked"[/#if] />
+			<input type="hidden" name="_isReviewEnabled" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isReviewCheck")}:
+		</th>
+		<td>
+			<input type="checkbox" name="isReviewCheck" value="true"[#if setting.isReviewCheck] checked="checked"[/#if] />
+			<input type="hidden" name="_isReviewCheck" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isConsultationEnabled")}:
+		</th>
+		<td>
+			<input type="checkbox" name="isConsultationEnabled" value="true"[#if setting.isConsultationEnabled] checked="checked"[/#if] />
+			<input type="hidden" name="_isConsultationEnabled" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isConsultationCheck")}:
+		</th>
+		<td>
+			<input type="checkbox" name="isConsultationCheck" value="true"[#if setting.isConsultationCheck] checked="checked"[/#if] />
+			<input type="hidden" name="_isConsultationCheck" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isInvoiceEnabled")}:
+		</th>
+		<td>
+			<input type="checkbox" name="isInvoiceEnabled" value="true"[#if setting.isInvoiceEnabled] checked="checked"[/#if] />
+			<input type="hidden" name="_isInvoiceEnabled" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isTaxPriceEnabled")}:
+		</th>
+		<td>
+			<input type="checkbox" name="isTaxPriceEnabled" value="true" title="${message("admin.setting.taxRateTitle")}"[#if setting.isTaxPriceEnabled] checked="checked"[/#if] />
+			<input type="hidden" name="_isTaxPriceEnabled" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.taxRate")}:
+		</th>
+		<td>
+			<input type="text" name="taxRate" class="text" value="${setting.taxRate}" maxlength="7" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.cookiePath")}:
+		</th>
+		<td>
+			<input type="text" name="cookiePath" class="text" value="${setting.cookiePath}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.cookieDomain")}:
+		</th>
+		<td>
+			<input type="text" name="cookieDomain" class="text" value="${setting.cookieDomain}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.kuaidi100Key")}:
+		</th>
+		<td>
+			<input type="text" name="kuaidi100Key" class="text" value="${setting.kuaidi100Key}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.payee")}:
+		</th>
+		<td>
+			<input type="text" name="payee" class="text" value="${setting.payee}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.payeeAccount")}:
+		</th>
+		<td>
+			<input type="text" name="payeeAccount" class="text" value="${setting.payeeAccount}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.payeeOpenBank")}:
+		</th>
+		<td>
+			<input type="text" name="payeeOpenBank" class="text" value="${setting.payeeOpenBank}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			API接口地址:
+		</th>
+		<td>
+			<input type="text" name="apiUrl" class="text" value="${setting.apiUrl}" />
+		</td>
+	</tr>
+</table>

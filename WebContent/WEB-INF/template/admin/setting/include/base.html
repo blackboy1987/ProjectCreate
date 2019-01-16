@@ -1,0 +1,94 @@
+<table class="input tabContent">
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.siteName")}:
+		</th>
+		<td>
+			<input type="text" name="siteName" class="text" value="${setting.siteName}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.siteUrl")}:
+		</th>
+		<td>
+			<input type="text" name="siteUrl" class="text" value="${setting.siteUrl}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.logo")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="text" name="logo" class="text" value="${setting.logo}" maxlength="200" />
+				<a href="javascript:;" class="button filePicker">${message("admin.upload.filePicker")}</a>
+				<a href="${setting.logo}" target="_blank">${message("admin.common.view")}</a>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.hotSearch")}:
+		</th>
+		<td>
+			<input type="text" name="hotSearch" class="text" value="${setting.hotSearch}" maxlength="200" title="${message("admin.setting.hotSearchTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.address")}:
+		</th>
+		<td>
+			<input type="text" name="address" class="text" value="${setting.address}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.phone")}:
+		</th>
+		<td>
+			<input type="text" name="phone" class="text" value="${setting.phone}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.wechat")}:
+		</th>
+		<td>
+			<input type="text" name="wechat" class="text" value="${setting.wechat}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.qq")}:
+		</th>
+		<td>
+			<input type="text" name="qq" class="text" value="${setting.qq}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.zipCode")}:
+		</th>
+		<td>
+			<input type="text" name="zipCode" class="text" value="${setting.zipCode}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.email")}:
+		</th>
+		<td>
+			<input type="text" name="email" class="text" value="${setting.email}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.certtext")}:
+		</th>
+		<td>
+			<input type="text" name="certtext" class="text" value="${setting.certtext}" maxlength="200" />
+		</td>
+	</tr>
+</table>

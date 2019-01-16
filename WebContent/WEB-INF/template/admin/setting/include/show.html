@@ -1,0 +1,171 @@
+<table class="input tabContent">
+	<tr>
+		<th>
+			${message("Setting.locale")}:
+		</th>
+		<td>
+			<select name="locale">
+				[#list locales as locale]
+					<option value="${locale}"[#if locale == setting.locale] selected="selected"[/#if]>${message("Setting.Locale." + locale)}</option>
+				[/#list]
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("admin.setting.largeProductImage")}:
+		</th>
+		<td>
+			${message("admin.setting.width")}:
+			<input type="text" name="largeProductImageWidth" class="text" value="${setting.largeProductImageWidth}" maxlength="9" style="width: 50px;" title="${message("admin.setting.widthTitle")}" />
+			${message("admin.setting.height")}:
+			<input type="text" name="largeProductImageHeight" class="text" value="${setting.largeProductImageHeight}" maxlength="9" style="width: 50px;" title="${message("admin.setting.heightTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("admin.setting.mediumProductImage")}:
+		</th>
+		<td>
+			${message("admin.setting.width")}:
+			<input type="text" name="mediumProductImageWidth" class="text" value="${setting.mediumProductImageWidth}" maxlength="9" style="width: 50px;" title="${message("admin.setting.widthTitle")}" />
+			${message("admin.setting.height")}:
+			<input type="text" name="mediumProductImageHeight" class="text" value="${setting.mediumProductImageHeight}" maxlength="9" style="width: 50px;" title="${message("admin.setting.heightTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("admin.setting.thumbnailProductImage")}:
+		</th>
+		<td>
+			${message("admin.setting.width")}:
+			<input type="text" name="thumbnailProductImageWidth" class="text" value="${setting.thumbnailProductImageWidth}" maxlength="9" style="width: 50px;" title="${message("admin.setting.widthTitle")}" />
+			${message("admin.setting.height")}:
+			<input type="text" name="thumbnailProductImageHeight" class="text" value="${setting.thumbnailProductImageHeight}" maxlength="9" style="width: 50px;" title="${message("admin.setting.heightTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("admin.setting.defaultLargeProductImage")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="text" name="defaultLargeProductImage" class="text" value="${setting.defaultLargeProductImage}" maxlength="200" />
+				<a href="javascript:;" class="button filePicker">${message("admin.upload.filePicker")}</a>
+				<a href="${setting.defaultLargeProductImage}" target="_blank">${message("admin.common.view")}</a>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("admin.setting.defaultMediumProductImage")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="text" name="defaultMediumProductImage" class="text" value="${setting.defaultMediumProductImage}" maxlength="200" />
+				<a href="javascript:;" class="button filePicker">${message("admin.upload.filePicker")}</a>
+				<a href="${setting.defaultMediumProductImage}" target="_blank">${message("admin.common.view")}</a>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("admin.setting.defaultThumbnailProductImage")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="text" name="defaultThumbnailProductImage" class="text" value="${setting.defaultThumbnailProductImage}" maxlength="200" />
+				<a href="javascript:;" class="button filePicker">${message("admin.upload.filePicker")}</a>
+				<a href="${setting.defaultThumbnailProductImage}" target="_blank">${message("admin.common.view")}</a>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("admin.setting.defaultStoreLogo")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="text" name="defaultStoreLogo" class="text" value="${setting.defaultStoreLogo}" maxlength="200" />
+				<a href="javascript:;" class="button filePicker">${message("admin.upload.filePicker")}</a>
+				<a href="${setting.defaultStoreLogo}" target="_blank">${message("admin.common.view")}</a>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.watermarkAlpha")}:
+		</th>
+		<td>
+			<input type="text" name="watermarkAlpha" class="text" value="${setting.watermarkAlpha}" maxlength="9" title="${message("admin.setting.watermarkAlphaTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.watermarkImage")}:
+		</th>
+		<td>
+			<span class="fieldSet">
+				<input type="file" name="watermarkImageFile" />
+				<a href="${base}${setting.watermarkImage}" target="_blank">${message("admin.common.view")}</a>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.watermarkPosition")}:
+		</th>
+		<td>
+			<select name="watermarkPosition">
+				[#list watermarkPositions as watermarkPosition]
+					<option value="${watermarkPosition}"[#if watermarkPosition == setting.watermarkPosition] selected="selected"[/#if]>${message("Setting.WatermarkPosition." + watermarkPosition)}</option>
+				[/#list]
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.priceScale")}:
+		</th>
+		<td>
+			<select name="priceScale">
+				<option value="0"[#if setting.priceScale == 0] selected="selected"[/#if]>${message("admin.setting.priceScale0")}</option>
+				<option value="1"[#if setting.priceScale == 1] selected="selected"[/#if]>${message("admin.setting.priceScale1")}</option>
+				<option value="2"[#if setting.priceScale == 2] selected="selected"[/#if]>${message("admin.setting.priceScale2")}</option>
+				<option value="3"[#if setting.priceScale == 3] selected="selected"[/#if]>${message("admin.setting.priceScale3")}</option>
+				<option value="3"[#if setting.priceScale == 4] selected="selected"[/#if]>${message("admin.setting.priceScale3")}</option>
+				<option value="3"[#if setting.priceScale == 5] selected="selected"[/#if]>${message("admin.setting.priceScale3")}</option>
+				<option value="3"[#if setting.priceScale == 6] selected="selected"[/#if]>${message("admin.setting.priceScale3")}</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.priceRoundType")}:
+		</th>
+		<td>
+			<select name="priceRoundType">
+				[#list roundTypes as roundType]
+					<option value="${roundType}"[#if roundType == setting.priceRoundType] selected="selected"[/#if]>${message("Setting.RoundType." + roundType)}</option>
+				[/#list]
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.isShowMarketPrice")}:
+		</th>
+		<td>
+			<input type="checkbox" name="isShowMarketPrice" value="true"[#if setting.isShowMarketPrice] checked="checked"[/#if] />
+			<input type="hidden" name="_isShowMarketPrice" value="false" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.defaultMarketPriceScale")}:
+		</th>
+		<td>
+			<input type="text" name="defaultMarketPriceScale" class="text" value="${setting.defaultMarketPriceScale}" maxlength="7" title="${message("admin.setting.defaultMarketPriceScaleTitle")}" />
+		</td>
+	</tr>
+</table>

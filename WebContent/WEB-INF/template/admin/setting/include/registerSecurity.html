@@ -1,0 +1,78 @@
+<table class="input tabContent">
+	<tr>
+		<th>
+			${message("Setting.allowedRegisterTypes")}:
+		</th>
+		<td>
+			[#list registerTypes as registerType]
+				<label>
+					<input type="checkbox" name="allowedRegisterTypes" value="${registerType}"[#if setting.allowedRegisterTypes?? && setting.allowedRegisterTypes?seq_contains(registerType)] checked="checked"[/#if] />${message("Setting.RegisterType." + registerType)}
+				</label>
+			[/#list]
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.parentIsPassCertification")}:
+		</th>
+		<td>
+			<input type="checkbox" name="parentIsPassCertification" value="true"[#if setting.parentIsPassCertification] checked="checked"[/#if] />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.defaultParent")}:
+		</th>
+		<td>
+			<input type="text" class="text" name="defaultParent" value="${setting.defaultParent}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.captchaTypes")}:
+		</th>
+		<td>
+			[#list captchaTypes as captchaType]
+				<label>
+					<input type="checkbox" name="captchaTypes" value="${captchaType}"[#if setting.captchaTypes?? && setting.captchaTypes?seq_contains(captchaType)] checked="checked"[/#if] />${message("Setting.CaptchaType." + captchaType)}
+				</label>
+			[/#list]
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.needPassword1s")}:
+		</th>
+		<td>
+			[#list needPassword1s as needPassword1]
+				<label>
+					<input type="checkbox" name="needPassword1s" value="${needPassword1}"[#if setting.needPassword1s?? && setting.needPassword1s?seq_contains(needPassword1)] checked="checked"[/#if] />${message("Setting.NeedPassword1." + needPassword1)}
+				</label>
+			[/#list]
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.maxFailedLoginAttempts")}:
+		</th>
+		<td>
+			<input type="text" name="maxFailedLoginAttempts" class="text" value="${setting.maxFailedLoginAttempts}" maxlength="9" title="${message("admin.setting.maxFailedLoginAttemptsTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.passwordLockTime")}:
+		</th>
+		<td>
+			<input type="text" name="passwordLockTime" class="text" value="${setting.passwordLockTime}" maxlength="9" title="${message("admin.setting.passwordLockTimeTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.safeKeyExpiryTime")}:
+		</th>
+		<td>
+			<input type="text" name="safeKeyExpiryTime" class="text" value="${setting.safeKeyExpiryTime}" maxlength="9" title="${message("admin.setting.safeKeyExpiryTimeTitle")}" />
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,58 @@
+<table class="input tabContent">
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.uploadMaxSize")}:
+		</th>
+		<td>
+			<input type="text" name="uploadMaxSize" class="text" value="${setting.uploadMaxSize}" maxlength="9" title="${message("admin.setting.uploadMaxSizeTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.uploadImageExtension")}:
+		</th>
+		<td>
+			<input type="text" name="uploadImageExtension" class="text" value="${setting.uploadImageExtension}" maxlength="200" title="${message("admin.setting.uploadImageExtensionTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.uploadMediaExtension")}:
+		</th>
+		<td>
+			<input type="text" name="uploadMediaExtension" class="text" value="${setting.uploadMediaExtension}" maxlength="200" title="${message("admin.setting.uploadMediaExtensionTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			${message("Setting.uploadFileExtension")}:
+		</th>
+		<td>
+			<input type="text" name="uploadFileExtension" class="text" value="${setting.uploadFileExtension}" maxlength="200" title="${message("admin.setting.uploadFileExtensionTitle")}" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.imageUploadPath")}:
+		</th>
+		<td>
+			<input type="text" name="imageUploadPath" class="text" value="${setting.imageUploadPath}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.mediaUploadPath")}:
+		</th>
+		<td>
+			<input type="text" name="mediaUploadPath" class="text" value="${setting.mediaUploadPath}" maxlength="200" />
+		</td>
+	</tr>
+	<tr>
+		<th>
+			<span class="requiredField">*</span>${message("Setting.fileUploadPath")}:
+		</th>
+		<td>
+			<input type="text" name="fileUploadPath" class="text" value="${setting.fileUploadPath}" maxlength="200" />
+		</td>
+	</tr>
+</table>
