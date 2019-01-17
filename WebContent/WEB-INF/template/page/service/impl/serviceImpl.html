@@ -1,0 +1,31 @@
+
+package com.igomall.service.impl;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.inject.Inject;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import com.igomall.dao.${module.capitalize()}Dao;
+import com.igomall.entity.${module.capitalize()};
+import com.igomall.service.${module.capitalize()}Service;
+
+/**
+ * Service - ${module.memo}
+ * 
+ * @author IGOMALL  Team
+ * @version 1.0
+ */
+@Service
+public class ${module.capitalize()}ServiceImpl extends BaseServiceImpl<${module.capitalize()}, Long> implements ${module.capitalize()}Service {
+
+	@@Autowired
+	private ${module.capitalize()}Dao ${module.name}Dao;
+
+}

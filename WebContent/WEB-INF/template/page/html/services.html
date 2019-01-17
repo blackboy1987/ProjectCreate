@@ -1,0 +1,47 @@
+import request from '@/utils/request1';
+import Constants from '@/utils/constants';
+
+export async function list(params) {
+  return request(`${Constants.baseUrl}${module.name}/list`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function save(params) {
+  return request(`${Constants.baseUrl}${module.name}/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function edit(params) {
+  return request(`${Constants.baseUrl}${module.name}/edit`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function remove(params) {
+  return request(`${Constants.baseUrl}${module.name}/delete`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function loadList(params) {
+  return request(`${Constants.baseUrl}${module.name}/loadList`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}

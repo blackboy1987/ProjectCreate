@@ -6,6 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonView;
 
 /**
@@ -120,6 +122,15 @@ public class Property extends BaseEntity<Long> {
     	return null;
     }
     
+    
+    /**
+     * 	首字母大写
+     * @return
+     */
+    @Transient
+    public String capitalize() {
+    	return StringUtils.capitalize(name);
+    }
     
     public interface ListView extends BaseView {};
     

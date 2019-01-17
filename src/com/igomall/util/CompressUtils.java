@@ -66,6 +66,7 @@ public final class CompressUtils {
 			archiveOutputStream = new ArchiveStreamFactory(encoding).createArchiveOutputStream(archiverName, new BufferedOutputStream(new FileOutputStream(destFile)));
 			if (ArrayUtils.isNotEmpty(srcFiles)) {
 				for (File srcFile : srcFiles) {
+					System.out.println(srcFile.getAbsolutePath());
 					if (srcFile == null || !srcFile.exists()) {
 						continue;
 					}
@@ -219,4 +220,10 @@ public final class CompressUtils {
 		extract(srcFile, destDir, null);
 	}
 
+	public static void main(String[] args) {
+		String path = "D:\\apache-maven-3.5.4";
+		String path1 = "D:\\a.zip";
+		archive(new File(path), new File(path1), "zip");
+	}
+	
 }

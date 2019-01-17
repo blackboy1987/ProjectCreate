@@ -51,7 +51,6 @@ public class StaticServiceImpl implements StaticService, ServletContextAware {
 			if (!staticDirectory.exists()) {
 				staticDirectory.mkdirs();
 			}
-System.out.println(staticFile.getAbsolutePath());
 			fileOutputStream = new FileOutputStream(staticFile);
 			outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
 			writer = new BufferedWriter(outputStreamWriter);

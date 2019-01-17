@@ -1,0 +1,76 @@
+
+package com.igomall.controller.api;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.igomall.Message;
+import com.igomall.Pageable;
+import com.igomall.entity.${module.capitalize()};
+import com.igomall.entity.BaseEntity;
+import com.igomall.service.${module.capitalize()}Service;
+
+/**
+ * Controller - ${module.memo}
+ * 
+ * @author IGOMALL Team
+ * @version 5.0
+ */
+@RestController("api${module.capitalize()}Controller")
+@RequestMapping("/api/${module.name}")
+public class ${module.capitalize()}Controller extends BaseController {
+
+	@Inject
+	private ${module.capitalize()}Service ${module.name}Service;
+
+	/**
+	 * 保存和更新
+	 */
+	@PostMapping("/save")
+	public String save(${module.capitalize()} ${module.name}) {
+		
+		if (!isValid(${module.name}, BaseEntity.Save.class)) {
+			return Message.error("参数错误");
+		}
+		if(${module.name}.isNew()){
+			${module.name}Service.save(${module.name});
+		}else{
+			${module.name}Service.update(${module.name});		
+		}
+		return SUCCESS_MESSAGE;
+	}
+
+	/**
+	 * 编辑
+	 */
+	@GetMapping("/edit")
+	@JsonView(${module.capitalize()}.EditView.class)
+	public ${module.capitalize()} edit(Long id) {
+		return ${module.name}Service.find(id);
+	}
+
+	/**
+	 * 列表
+	 */
+	@GetMapping("/list")
+	@JsonView(${module.capitalize()}.ListView.class)
+	public String list(Pageable pageable) {
+		model.addAttribute("page", ${module.name}Service.findPage(pageable));
+		return "admin/${module.name}/list";
+	}
+
+	/**
+	 * 删除
+	 */
+	@PostMapping("/delete")
+	public @ResponseBody Message delete(Long[] ids) {
+		${module.name}Service.delete(ids);
+		return SUCCESS_MESSAGE;
+	}
+
+}

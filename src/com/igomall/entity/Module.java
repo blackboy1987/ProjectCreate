@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonView;
 
 /**
@@ -92,7 +94,14 @@ public class Module extends BaseEntity<Long> {
     	return null;
     }
     
-    
+    /**
+     * 	首字母大写
+     * @return
+     */
+    @Transient
+    public String capitalize() {
+    	return StringUtils.capitalize(name);
+    }
     
     public interface ListView extends BaseView {};
     

@@ -1,0 +1,116 @@
+import React, { PureComponent } from 'react';
+import { connect } from 'dva';
+import router from "umi/router";
+import { FormattedMessage } from 'umi/locale';
+import {
+  Form,
+  Input,
+  Button,
+  Card,
+  message,
+} from 'antd';
+import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+
+const FormItem = Form.Item;
+
+@connect(({project, loading }) => ({
+  project,
+  submitting: loading.effects['${module.name}/edit'],
+}))
+@Form.create()
+class Add extends PureComponent {
+
+  componentDidMount() {
+    const {dispatch,match:{params={}}} = this.props;
+    if(params){
+      dispatch({
+        type:"${module.name}/edit",
+        payload: params,
+      });
+    }
+  }
+
+
+  handleSubmit = e => {
+    const root = this;
+    const { dispatch, form } = root.props;
+    e.preventDefault();
+    form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        dispatch({
+          type: '${module.name}/save',
+          payload: values,
+          callback:response=>{
+            if(response.type==="success"){
+              message.success(response.content);
+              router.push("/${module.name}");
+            }else{
+              message.error(response.content);
+            }
+          }
+        });
+      }
+    });
+  };
+
+  render() {
+    const { submitting,${module.name}:{${module.name}Info={}} } = this.props;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 7 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+        md: { span: 10 },
+      },
+    };
+
+    const submitFormLayout = {
+      wrapperCol: {
+        xs: { span: 24, offset: 0 },
+        sm: { span: 10, offset: 7 },
+      },
+    };
+
+    return (
+      <PageHeaderWrapper>
+        <Card bordered={false}>
+          <Form onSubmit={this.handleSubmit} style={{ marginTop: 8 }}>
+            {getFieldDecorator('id',{
+              initialValue: ${module.name}Info.id,
+            })(<Input style={{display:"none"}} />)}
+            
+            [#list module.properties as property]
+            <FormItem
+              {...formItemLayout}
+              label='${property.memo}'
+            >
+              {getFieldDecorator('${property.name}', {
+                initialValue:${module.name}Info.${property.name},
+              })(<Input />)}
+            </FormItem>
+            [/#list]
+            <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
+              <Button type="primary" htmlType="submit" loading={submitting}>
+                <FormattedMessage id="form.save" />
+              </Button>
+              <Button style={{ marginLeft: 8 }}>
+                重置
+              </Button>
+              <Button style={{ marginLeft: 8 }}>
+                返回
+              </Button>
+            </FormItem>
+          </Form>
+        </Card>
+      </PageHeaderWrapper>
+    );
+  }
+}
+
+export default Add;

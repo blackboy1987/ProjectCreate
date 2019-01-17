@@ -118,15 +118,69 @@ public class ModuleController extends BaseController {
     public ResponseEntity<byte[]> download(Long moduleId) throws IOException, TemplateException{
         Module module = moduleService.find(moduleId);
         String filename=module.getName()+".zip";
-        Template template = templateService.get("entity");
+        Template entity = templateService.get("entity");
+        Template dao = templateService.get("dao");
+        Template daoImpl = templateService.get("daoImpl");
+        Template service = templateService.get("service");
+        Template serviceImpl = templateService.get("serviceImpl");
+        Template controller = templateService.get("controller");
+        Template addPage = templateService.get("addPage");
+        Template listPage = templateService.get("listPage");
+        
+
+        Template modulePage = templateService.get("module");
+        Template servicesPage = templateService.get("services");
+        
+        
+        
 		Map<String, Object> model = new HashMap<>();
 		model.put("name",module.getName());
 		model.put("module",module);
-		String staticPath = FreeMarkerUtils.process(template.getStaticPath(), model);
-		String filePath = staticService.build1(template.getTemplatePath(), staticPath, model);
+		String staticPathEntity = FreeMarkerUtils.process(entity.getStaticPath(), model);
+		String filePathEntity = staticService.build1(entity.getTemplatePath(), staticPathEntity, model);
+		
+		String staticPathDao = FreeMarkerUtils.process(dao.getStaticPath(), model);
+		String filePathDao = staticService.build1(dao.getTemplatePath(), staticPathDao, model);
+		
+		String staticPathDaoImpl = FreeMarkerUtils.process(daoImpl.getStaticPath(), model);
+		String filePathDaoImpl = staticService.build1(daoImpl.getTemplatePath(), staticPathDaoImpl, model);
+		
+		String staticPathService = FreeMarkerUtils.process(service.getStaticPath(), model);
+		String filePathService = staticService.build1(service.getTemplatePath(), staticPathService, model);
+		
+		String staticPathServiceImpl = FreeMarkerUtils.process(serviceImpl.getStaticPath(), model);
+		String filePathServiceImpl = staticService.build1(serviceImpl.getTemplatePath(), staticPathServiceImpl, model);
+		
+		String staticPathController = FreeMarkerUtils.process(controller.getStaticPath(), model);
+		String filePathController = staticService.build1(controller.getTemplatePath(), staticPathController, model);
+		
+		String staticPathAdd = FreeMarkerUtils.process(addPage.getStaticPath(), model);
+		String filePathAdd = staticService.build1(addPage.getTemplatePath(), staticPathAdd, model);
+		
+		String staticPathList = FreeMarkerUtils.process(listPage.getStaticPath(), model);
+		String filePathList = staticService.build1(listPage.getTemplatePath(), staticPathList, model);
+
+		String staticPathModule = FreeMarkerUtils.process(modulePage.getStaticPath(), model);
+		String filePathModule = staticService.build1(modulePage.getTemplatePath(), staticPathModule, model);
+		
+		String staticPathServices = FreeMarkerUtils.process(servicesPage.getStaticPath(), model);
+		String filePathListServices = staticService.build1(servicesPage.getTemplatePath(), staticPathServices, model);
 		//将生成的文件进行压缩
 		File destFile = new File("3.zip");
-		CompressUtils.archive(new File(filePath), destFile, "zip");
+//		CompressUtils.archive(new File[] {
+//				new File(filePathEntity),
+//				new File(filePathDao),
+//				new File(filePathDaoImpl),
+//				new File(filePathService),
+//				new File(filePathServiceImpl),
+//				new File(filePathController),
+//				new File(filePathAdd),
+//				new File(filePathList),
+//				new File(filePathModule),
+//				new File(filePathListServices),
+//		}, destFile, "zip");
+		
+		CompressUtils.archive(new File("Users/blackboy/Desktop/libs"), destFile, "zip");
 		
 		
         HttpHeaders headers = new HttpHeaders();

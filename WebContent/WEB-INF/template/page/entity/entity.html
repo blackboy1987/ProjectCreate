@@ -10,21 +10,23 @@ import java.math.BigDecimal;
 [/#list]
 
 import javax.persistence.Entity;
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
- * Entity - 管理员
+ * Entity - ${module.memo}
  * 
  * @author IGOMALL  Team
  * @version 1.0
  */
 @Entity
-public class ${name} extends BaseEntity<Long> {
+public class ${module.capitalize()} extends BaseEntity<Long> {
 
 
 	[#list module.properties as property]	
 	/**
 	 * ${property.memo}
 	 */
+	@JsonView({ListView.class,EditView.class})
 	private ${property.type} ${property.name};
 	
 	[/#list]
@@ -32,24 +34,26 @@ public class ${name} extends BaseEntity<Long> {
 	[#list module.properties as property]
 	
 	/**
-	 * 设置用户名
+	 * 设置${property.memo}
 	 * 
-	 * @param username
-	 *            用户名
+	 * @param ${property.name}
+	 *     ${property.memo}
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void set${property.capitalize()}(${property.type} ${property.name}) {
+		this.${property.name} = ${property.name};
 	}
 
 	/**
-	 * 获取密码
+	 * 获取${property.memo}
 	 * 
-	 * @return 密码
+	 * @return ${property.memo}
 	 */
-	public String getPassword() {
-		return password;
+	public ${property.type} get${property.capitalize()}() {
+		return ${property.name};
 	}
 	[/#list ]
-	
 
+	public interface ListView extends BaseView {};
+    
+    public interface EditView extends BaseView{}
 }
