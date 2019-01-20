@@ -25,5 +25,9 @@ public class ProjectServiceImpl extends BaseServiceImpl<Project, Long> implement
 	public boolean nameExists(String name) {
 		return projectDao.exists("name", StringUtils.lowerCase(name));
 	}
-	
+
+	@Override
+	public boolean nameUnique(Long id, String name) {
+		return projectDao.unique(id, "name", StringUtils.lowerCase(name));
+	}
 }

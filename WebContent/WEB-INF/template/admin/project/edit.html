@@ -1,54 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<title>Metronic | Dashboard</title>
-		<meta name="description" content="Latest updates and statistic charts">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-		[#include "/admin/include/css/web_font.html"]
-		[#include "/admin/include/css/global_mandatory_vendors.html"]
-		[#include "/admin/include/css/global_optional_vendors.html"]
-		[#include "/admin/include/css/global_theme_styles.html"]
-		[#include "/admin/include/css/page_vendors_styles.html"]
-		[#include "/admin/include/css/shortcut.html"]
-	</head>
-	<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
-		<div class="m-grid m-grid--hor m-grid--root m-page">
-			[#include "/admin/include/header.html"]
-			<div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
-				[#include "/admin/include/left_aside.html"]
-				<div class="m-grid__item m-grid__item--fluid m-wrapper">
-					<div class="m-content">
-						<div class="m-portlet m-portlet--tab">
-							<div class="m-portlet__head">
-								<div class="m-portlet__head-caption">
-									<div class="m-portlet__head-title">
-										<span class="m-portlet__head-icon m--hide">
-											<i class="la la-gear"></i>
-										</span>
-										<h3 class="m-portlet__head-text">
-											标题
-										</h3>
-									</div>
-								</div>
-							</div>
-							<div class="m-portlet__body">
-								内容
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			[#include "/admin/include/footer.html"]
-		</div>
-		[#include "/admin/include/quick_sidebar.html"]
-		<div id="m_scroll_top" class="m-scroll-top">
-			<i class="la la-arrow-up"></i>
-		</div>
-		[#include "/admin/include/js/global_mandatory_vendors.html"]
-		[#include "/admin/include/js/global_optional_vendors.html"]
-		[#include "/admin/include/js/global_theme_bundle.html"]
-		[#include "/admin/include/js/page_vendors.html"]
-		<script src="${base}/resources/default/assets/app/js/dashboard.js" type="text/javascript"></script>
-	</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>修改项目</title>
+	<meta name="author" content="IGOMALL Team" />
+	<meta name="copyright" content="IGOMALL ++" />
+	<link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
+	<script type="text/javascript" src="${base}/resources/admin/js/jquery.tools.js"></script>
+	<script type="text/javascript" src="${base}/resources/admin/js/jquery.validate.js"></script>
+	<script type="text/javascript" src="${base}/resources/admin/js/common.js"></script>
+	<script type="text/javascript" src="${base}/resources/admin/js/input.js"></script>
+	<style type="text/css">
+		.roles label {
+			width: 150px;
+			display: block;
+			float: left;
+			padding-right: 6px;
+		}
+	</style>
+	<script type="text/javascript">
+        $().ready(function() {
+
+            var $inputForm = $("#inputForm");
+
+            [@flash_message /]
+
+            // 表单验证
+            $inputForm.validate({
+                rules: {
+                    name: {
+                        required: true,
+                        remote: {
+                            url: "check_name?id=${project.id}",
+                            cache: false
+                        }
+                    }
+
+                },
+                messages: {
+                    name: {
+                        remote: "项目名称已存在"
+                    }
+                }
+            });
+
+        });
+	</script>
+</head>
+<body>
+<div class="breadcrumb">
+	修改项目
+</div>
+<form id="inputForm" action="update" method="post">
+	<input type="hidden" name="id" value="${project.id}" />
+	<ul id="tab" class="tab">
+		<li>
+			<input type="button" value="${message("admin.admin.base")}" />
+		</li>
+	</ul>
+	<table class="input tabContent">
+		<tr>
+			<th>
+				<span class="requiredField">*</span>项目名称:
+			</th>
+			<td>
+				<input type="text" name="name" class="text" value="${project.name}"/>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				项目描述:
+			</th>
+			<td>
+				<textarea class="text" autocomplete="off">${project.memo}</textarea>
+			</td>
+		</tr>
+	</table>
+	<table class="input">
+		<tr>
+			<th>
+				&nbsp;
+			</th>
+			<td>
+				<input type="submit" class="button" value="${message("admin.common.submit")}" />
+				<input type="button" class="button" value="${message("admin.common.back")}" onclick="history.back(); return false;" />
+			</td>
+		</tr>
+	</table>
+</form>
+</body>
 </html>

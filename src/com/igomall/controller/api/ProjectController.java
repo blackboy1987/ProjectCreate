@@ -39,8 +39,8 @@ public class ProjectController extends BaseController {
 	 * 检查項目名是否存在
 	 */
 	@PostMapping("/check_name")
-	public @ResponseBody boolean checkName(String name) {
-		return StringUtils.isNotEmpty(name) && !projectService.nameExists(name);
+	public @ResponseBody boolean checkName(Long id,String name) {
+		return StringUtils.isNotEmpty(name) && projectService.nameUnique(id, name);
 	}
 
 	/**

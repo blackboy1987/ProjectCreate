@@ -13,4 +13,14 @@ public interface ProjectService extends BaseService<Project, Long> {
 
 	boolean nameExists(String name);
 
+	/**
+	 * 判断项目名称是否唯一
+	 *
+	 * @param id
+	 *            ID
+	 * @param name
+	 *           项目名称
+	 * @return 项目名称是否唯一
+	 */
+	boolean nameUnique(Long id, String name);
 }
