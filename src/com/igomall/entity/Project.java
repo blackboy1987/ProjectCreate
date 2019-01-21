@@ -39,6 +39,10 @@ public class Project extends BaseEntity<Long> {
 	@JsonView({ListView.class,EditView.class})
 	private String memo;
 
+
+	@JsonView({ListView.class,EditView.class})
+	private String packageName;
+	
 	@OneToMany(mappedBy = "project",fetch = FetchType.LAZY)
 	private Set<Module> modules = new HashSet<>();
 	
@@ -56,6 +60,14 @@ public class Project extends BaseEntity<Long> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public void setPackageName(String packageName) {
+		this.packageName = packageName;
 	}
 
 	public Set<Module> getModules() {

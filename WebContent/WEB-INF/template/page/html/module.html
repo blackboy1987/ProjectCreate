@@ -10,7 +10,6 @@ export default {
       total:0,
     },
     ${module.name}Info: {},
-    loadList:[],
   },
 
   effects: {
@@ -41,14 +40,6 @@ export default {
       }
     },
 
-    *loadList({payload},{call,put}){
-      const response = yield call(loadList,payload);
-      yield put({
-        type:'${module.name}ListInfo',
-        payload:response,
-      });
-    }
-
   },
 
   reducers: {
@@ -62,12 +53,6 @@ export default {
       return {
         ...state,
         ${module.name}Info: action.payload,
-      };
-    },
-    loadListInfo(state, action) {
-      return {
-        ...state,
-        loadList: action.payload,
       };
     },
   },

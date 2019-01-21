@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.ServletContextAware;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.igomall.Message;
@@ -44,8 +47,10 @@ import freemarker.template.TemplateException;
  */
 @RestController("apiModuleController")
 @RequestMapping("/api/module")
-public class ModuleController extends BaseController {
+public class ModuleController extends BaseController implements ServletContextAware {
 
+	private ServletContext servletContext;
+	
 	@Autowired
 	private ModuleService moduleService;
 	
@@ -58,6 +63,10 @@ public class ModuleController extends BaseController {
 	@Autowired
 	private StaticService staticService;
 
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
+	}
+	
 	/**
 	 * 检查項目名是否存在
 	 */
@@ -134,37 +143,44 @@ public class ModuleController extends BaseController {
         
         
 		Map<String, Object> model = new HashMap<>();
-		model.put("name",module.getName());
+		model.put("name",StringUtils.capitalize(module.getName()));
 		model.put("module",module);
+		model.put("project",module.getProject());
+		
+		String rootPath = module.getProject().getName()+"/";
+		String packagePath = module.getProject().getPackageName().replaceAll("\\.", "/")+"/";
+		
+		
 		String staticPathEntity = FreeMarkerUtils.process(entity.getStaticPath(), model);
-		String filePathEntity = staticService.build1(entity.getTemplatePath(), staticPathEntity, model);
+		String filePathEntity = staticService.build1(entity.getTemplatePath(), rootPath+packagePath+staticPathEntity, model);
 		
 		String staticPathDao = FreeMarkerUtils.process(dao.getStaticPath(), model);
-		String filePathDao = staticService.build1(dao.getTemplatePath(), staticPathDao, model);
+		String filePathDao = staticService.build1(dao.getTemplatePath(), rootPath+packagePath+staticPathDao, model);
 		
 		String staticPathDaoImpl = FreeMarkerUtils.process(daoImpl.getStaticPath(), model);
-		String filePathDaoImpl = staticService.build1(daoImpl.getTemplatePath(), staticPathDaoImpl, model);
+		String filePathDaoImpl = staticService.build1(daoImpl.getTemplatePath(), rootPath+packagePath+staticPathDaoImpl, model);
 		
 		String staticPathService = FreeMarkerUtils.process(service.getStaticPath(), model);
-		String filePathService = staticService.build1(service.getTemplatePath(), staticPathService, model);
+		String filePathService = staticService.build1(service.getTemplatePath(), rootPath+packagePath+staticPathService, model);
 		
 		String staticPathServiceImpl = FreeMarkerUtils.process(serviceImpl.getStaticPath(), model);
-		String filePathServiceImpl = staticService.build1(serviceImpl.getTemplatePath(), staticPathServiceImpl, model);
+		String filePathServiceImpl = staticService.build1(serviceImpl.getTemplatePath(), rootPath+packagePath+staticPathServiceImpl, model);
 		
 		String staticPathController = FreeMarkerUtils.process(controller.getStaticPath(), model);
-		String filePathController = staticService.build1(controller.getTemplatePath(), staticPathController, model);
+		String filePathController = staticService.build1(controller.getTemplatePath(), rootPath+packagePath+staticPathController, model);
 		
 		String staticPathAdd = FreeMarkerUtils.process(addPage.getStaticPath(), model);
-		String filePathAdd = staticService.build1(addPage.getTemplatePath(), staticPathAdd, model);
+		String filePathAdd = staticService.build1(addPage.getTemplatePath(), rootPath+staticPathAdd, model);
 		
 		String staticPathList = FreeMarkerUtils.process(listPage.getStaticPath(), model);
-		String filePathList = staticService.build1(listPage.getTemplatePath(), staticPathList, model);
+		String filePathList = staticService.build1(listPage.getTemplatePath(), rootPath+staticPathList, model);
 
 		String staticPathModule = FreeMarkerUtils.process(modulePage.getStaticPath(), model);
-		String filePathModule = staticService.build1(modulePage.getTemplatePath(), staticPathModule, model);
+		String filePathModule = staticService.build1(modulePage.getTemplatePath(), rootPath+staticPathModule, model);
 		
 		String staticPathServices = FreeMarkerUtils.process(servicesPage.getStaticPath(), model);
-		String filePathListServices = staticService.build1(servicesPage.getTemplatePath(), staticPathServices, model);
+		String filePathListServices = staticService.build1(servicesPage.getTemplatePath(), rootPath+staticPathServices, model);
+		
 		//将生成的文件进行压缩
 		File destFile = new File("3.zip");
 //		CompressUtils.archive(new File[] {
@@ -180,8 +196,7 @@ public class ModuleController extends BaseController {
 //				new File(filePathListServices),
 //		}, destFile, "zip");
 		
-		CompressUtils.archive(new File("Users/blackboy/Desktop/libs"), destFile, "zip");
-		
+		CompressUtils.archive(new File(servletContext.getRealPath(rootPath)), destFile, "zip");
 		
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);    

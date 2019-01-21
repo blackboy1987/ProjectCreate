@@ -13,8 +13,8 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 const FormItem = Form.Item;
 
-@connect(({project, loading }) => ({
-  project,
+@connect(({${module.name}, loading }) => ({
+  ${module.name},
   submitting: loading.effects['${module.name}/edit'],
 }))
 @Form.create()
