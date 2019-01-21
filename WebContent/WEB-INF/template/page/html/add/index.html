@@ -10,6 +10,7 @@ import {
   message,
 } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import Link from "/umi/link";
 
 const FormItem = Form.Item;
 
@@ -99,12 +100,8 @@ class Add extends PureComponent {
               <Button type="primary" htmlType="submit" loading={submitting}>
                 <FormattedMessage id="form.save" />
               </Button>
-              <Button style={{ marginLeft: 8 }}>
-                重置
-              </Button>
-              <Button style={{ marginLeft: 8 }}>
-                返回
-              </Button>
+              <Button style={{ marginLeft: 8 }}>重置</Button>
+              <Link to="/${module.name}"><Button style={{ marginLeft: 8 }}>返回</Button></Link>
             </FormItem>
           </Form>
         </Card>
