@@ -1,4 +1,8 @@
-
+/*
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
+ */
 package com.igomall.service.impl;
 
 import java.util.HashSet;
@@ -32,7 +36,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Long> implements Ad
 
 	@Transactional(readOnly = true)
 	public Admin getUser(Object principal) {
-		Assert.notNull(principal,"");
+		Assert.notNull(principal);
 		Assert.isInstanceOf(String.class, principal);
 
 		return findByUsername((String) principal);
@@ -40,7 +44,7 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Long> implements Ad
 
 	@Transactional(readOnly = true)
 	public Set<String> getPermissions(User user) {
-		Assert.notNull(user,"");
+		Assert.notNull(user);
 		Assert.isInstanceOf(Admin.class, user);
 
 		Admin admin = adminDao.find(user.getId());

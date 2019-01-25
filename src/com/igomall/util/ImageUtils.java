@@ -161,12 +161,12 @@ public final class ImageUtils {
 	 *            目标高度
 	 */
 	public static void zoom(File srcFile, File destFile, int destWidth, int destHeight) {
-		Assert.notNull(srcFile,"");
-		Assert.state(srcFile.exists(),"");
-		Assert.state(srcFile.isFile(),"");
-		Assert.notNull(destFile,"");
-		Assert.state(destWidth > 0,"");
-		Assert.state(destHeight > 0,"");
+		Assert.notNull(srcFile);
+		Assert.state(srcFile.exists());
+		Assert.state(srcFile.isFile());
+		Assert.notNull(destFile);
+		Assert.state(destWidth > 0);
+		Assert.state(destHeight > 0);
 
 		if (ImageUtils.Method.jdk.equals(method)) {
 			Graphics2D graphics2D = null;
@@ -273,12 +273,12 @@ public final class ImageUtils {
 	 *            水印透明度
 	 */
 	public static void addWatermark(File srcFile, File destFile, File watermarkFile, Setting.WatermarkPosition watermarkPosition, int alpha) {
-		Assert.notNull(srcFile,"");
-		Assert.state(srcFile.exists(),"");
-		Assert.state(srcFile.isFile(),"");
-		Assert.notNull(destFile,"");
-		Assert.state(alpha >= 0,"");
-		Assert.state(alpha <= 100,"");
+		Assert.notNull(srcFile);
+		Assert.state(srcFile.exists());
+		Assert.state(srcFile.isFile());
+		Assert.notNull(destFile);
+		Assert.state(alpha >= 0);
+		Assert.state(alpha <= 100);
 
 		if (watermarkFile == null || !watermarkFile.exists() || !watermarkFile.isFile() || watermarkPosition == null || Setting.WatermarkPosition.no.equals(watermarkPosition)) {
 			try {
@@ -435,7 +435,7 @@ public final class ImageUtils {
 	 * @return 十六进制代码
 	 */
 	private static String toHexEncoding(Color color) {
-		Assert.notNull(color,"");
+		Assert.notNull(color);
 
 		String r, g, b;
 		StringBuilder result = new StringBuilder();

@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>${message("admin.admin.list")}</title>
-<meta name="author" content="" />
-<meta name="copyright" content="IGOMALL" />
+<title>${message("admin.admin.list")} - Powered By IGOMALL</title>
+<meta name="author" content="IGOMALL Team" />
+<meta name="copyright" content="IGOMALL ++" />
 <link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/common.js"></script>
@@ -114,7 +114,7 @@ $().ready(function() {
 					</td>
 					<td>
 						[#if admin.lastLoginDate??]
-							<span title="${admin.lastLoginDate?string("yyyy-MM-dd HH:mm:ss")}">${admin.lastLoginDate?string("yyyy-MM-dd HH:mm:ss")}</span>
+							<span title="${admin.lastLoginDate?string("yyyy-MM-dd HH:mm:ss")}">${admin.lastLoginDate}</span>
 						[#else]
 							-
 						[/#if]
@@ -129,7 +129,7 @@ $().ready(function() {
 						[/#if]
 					</td>
 					<td>
-						<span title="${admin.createdDate?string("yyyy-MM-dd HH:mm:ss")}">${admin.createdDate?string("yyyy-MM-dd HH:mm:ss")}</span>
+						<span title="${admin.createdDate?string("yyyy-MM-dd HH:mm:ss")}">${admin.createdDate}</span>
 					</td>
 					<td>
 						<a href="edit?id=${admin.id}">[${message("admin.common.edit")}]</a>

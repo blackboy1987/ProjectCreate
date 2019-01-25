@@ -56,7 +56,7 @@ public final class AuditingMetadata {
 	 *            类
 	 */
 	private AuditingMetadata(Class<?> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		this.createdByProperties = findProperties(type, CreatedBy.class);
 		this.createdDateProperties = findProperties(type, CreatedDate.class);
@@ -108,7 +108,7 @@ public final class AuditingMetadata {
 	 * @return 审计元数据
 	 */
 	public static AuditingMetadata getAuditingMetadata(Class<?> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		AuditingMetadata auditingMetadata = AUDITING_METADATA_CACHE.get(type);
 		if (auditingMetadata == null) {
@@ -137,8 +137,8 @@ public final class AuditingMetadata {
 	 * @return 属性
 	 */
 	private List<AuditingMetadata.Property> findProperties(Class<?> type, Class<? extends Annotation> annotationType) {
-		Assert.notNull(type,"");
-		Assert.notNull(annotationType,"");
+		Assert.notNull(type);
+		Assert.notNull(annotationType);
 
 		Map<String, PropertyDescriptor> propertyDescriptorMap = new HashMap<>();
 		Map<String, PropertyDescriptor> remainingPropertyDescriptorMap = new HashMap<>();
@@ -197,7 +197,7 @@ public final class AuditingMetadata {
 		 *            PropertyDescriptor
 		 */
 		public Property(Field field, PropertyDescriptor propertyDescriptor) {
-			Assert.isTrue(field != null || propertyDescriptor != null,"");
+			Assert.isTrue(field != null || propertyDescriptor != null);
 
 			this.name = field != null ? field.getName() : propertyDescriptor.getName();
 			this.type = field != null ? field.getType() : propertyDescriptor.getPropertyType();
@@ -250,7 +250,7 @@ public final class AuditingMetadata {
 		 *            值
 		 */
 		public void setValue(Object target, Object value) {
-			Assert.notNull(target,"");
+			Assert.notNull(target);
 
 			if (field != null) {
 				BeanUtils.setAccessible(field);

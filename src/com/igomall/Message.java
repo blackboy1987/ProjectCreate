@@ -1,8 +1,6 @@
 
 package com.igomall;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.igomall.entity.BaseEntity.BaseView;
 import com.igomall.util.SpringUtils;
 
 /**
@@ -37,13 +35,11 @@ public class Message {
 	/**
 	 * 类型
 	 */
-	@JsonView(BaseView.class)
 	private Message.Type type;
 
 	/**
 	 * 内容
 	 */
-	@JsonView(BaseView.class)
 	private String content;
 
 	/**

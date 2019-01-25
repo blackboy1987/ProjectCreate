@@ -169,9 +169,9 @@ public final class FreeMarkerUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getParameter(String name, Class<T> type, Map<String, TemplateModel> params) throws TemplateModelException {
-		Assert.hasText(name,"");
-		Assert.notNull(type,"");
-		Assert.notNull(params,"");
+		Assert.hasText(name);
+		Assert.notNull(type);
+		Assert.notNull(params);
 
 		TemplateModel templateModel = params.get(name);
 		if (templateModel != null) {
@@ -196,8 +196,8 @@ public final class FreeMarkerUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getArgument(int index, Class<T> type, List<?> arguments) throws TemplateModelException {
-		Assert.notNull(type,"");
-		Assert.notNull(arguments,"");
+		Assert.notNull(type);
+		Assert.notNull(arguments);
 
 		if (index >= 0 && index < arguments.size()) {
 			Object argument = arguments.get(index);
@@ -226,8 +226,8 @@ public final class FreeMarkerUtils {
 	 * @return 变量
 	 */
 	public static TemplateModel getVariable(String name, Environment env) throws TemplateModelException {
-		Assert.hasText(name,"");
-		Assert.notNull(env,"");
+		Assert.hasText(name);
+		Assert.notNull(env);
 
 		return env.getVariable(name);
 	}
@@ -243,8 +243,8 @@ public final class FreeMarkerUtils {
 	 *            环境变量
 	 */
 	public static void setVariable(String name, Object value, Environment env) throws TemplateException {
-		Assert.hasText(name,"");
-		Assert.notNull(env,"");
+		Assert.hasText(name);
+		Assert.notNull(env);
 
 		if (value instanceof TemplateModel) {
 			env.setVariable(name, (TemplateModel) value);
@@ -262,8 +262,8 @@ public final class FreeMarkerUtils {
 	 *            环境变量
 	 */
 	public static void setVariables(Map<String, Object> variables, Environment env) throws TemplateException {
-		Assert.notNull(variables,"");
-		Assert.notNull(env,"");
+		Assert.notNull(variables);
+		Assert.notNull(env);
 
 		for (Map.Entry<String, Object> entry : variables.entrySet()) {
 			String name = entry.getKey();

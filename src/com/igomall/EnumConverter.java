@@ -24,7 +24,7 @@ public class EnumConverter extends AbstractConverter {
 	 *            默认类型
 	 */
 	public EnumConverter(Class<?> defaultType) {
-		Assert.notNull(defaultType,"");
+		Assert.notNull(defaultType);
 
 		this.defaultType = defaultType;
 	}

@@ -1,7 +1,7 @@
 /*
-
-
-
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
  */
 package com.igomall.service.impl;
 
@@ -41,7 +41,7 @@ public class RSAServiceImpl implements RSAService {
 
 	@Transactional(readOnly = true)
 	public RSAPublicKey generateKey(HttpServletRequest request) {
-		Assert.notNull(request,"");
+		Assert.notNull(request);
 
 		KeyPair keyPair = RSAUtils.generateKeyPair(KEY_SIZE);
 		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
@@ -52,14 +52,14 @@ public class RSAServiceImpl implements RSAService {
 
 	@Transactional(readOnly = true)
 	public void removePrivateKey(HttpServletRequest request) {
-		Assert.notNull(request,"");
+		Assert.notNull(request);
 
 		request.getSession().removeAttribute(PRIVATE_KEY_ATTRIBUTE_NAME);
 	}
 
 	@Transactional(readOnly = true)
 	public String decryptParameter(String name, HttpServletRequest request) {
-		Assert.notNull(request,"");
+		Assert.notNull(request);
 
 		if (StringUtils.isEmpty(name)) {
 			return null;

@@ -53,7 +53,7 @@ public final class XmlUtils {
 	 * @return XML字符串
 	 */
 	public static String toXml(Object value) {
-		Assert.notNull(value,"");
+		Assert.notNull(value);
 
 		try {
 			JacksonXmlModule module = new JacksonXmlModule();
@@ -75,8 +75,8 @@ public final class XmlUtils {
 	 * @return 对象
 	 */
 	public static <T> T toObject(String xml, Class<T> valueType) {
-		Assert.hasText(xml,"");
-		Assert.notNull(valueType,"");
+		Assert.hasText(xml);
+		Assert.notNull(valueType);
 
 		try {
 			return XML_MAPPER.readValue(xml, valueType);
@@ -99,8 +99,8 @@ public final class XmlUtils {
 	 * @return 对象
 	 */
 	public static <T> T toObject(String xml, TypeReference<?> typeReference) {
-		Assert.hasText(xml,"");
-		Assert.notNull(typeReference,"");
+		Assert.hasText(xml);
+		Assert.notNull(typeReference);
 
 		try {
 			return XML_MAPPER.readValue(xml, typeReference);
@@ -123,8 +123,8 @@ public final class XmlUtils {
 	 * @return 对象
 	 */
 	public static <T> T toObject(String xml, JavaType javaType) {
-		Assert.hasText(xml,"");
-		Assert.notNull(javaType,"");
+		Assert.hasText(xml);
+		Assert.notNull(javaType);
 
 		try {
 			return XML_MAPPER.readValue(xml, javaType);
@@ -145,7 +145,7 @@ public final class XmlUtils {
 	 * @return 树
 	 */
 	public static JsonNode toTree(String xml) {
-		Assert.hasText(xml,"");
+		Assert.hasText(xml);
 
 		try {
 			return XML_MAPPER.readTree(xml);
@@ -165,8 +165,8 @@ public final class XmlUtils {
 	 *            对象
 	 */
 	public static void writeValue(Writer writer, Object value) {
-		Assert.notNull(writer,"");
-		Assert.notNull(value,"");
+		Assert.notNull(writer);
+		Assert.notNull(value);
 
 		try {
 			XML_MAPPER.writeValue(writer, value);
@@ -187,7 +187,7 @@ public final class XmlUtils {
 	 * @return 类型
 	 */
 	public static JavaType constructType(Type type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		return TypeFactory.defaultInstance().constructType(type);
 	}
@@ -200,7 +200,7 @@ public final class XmlUtils {
 	 * @return 类型
 	 */
 	public static JavaType constructType(TypeReference<?> typeReference) {
-		Assert.notNull(typeReference,"");
+		Assert.notNull(typeReference);
 
 		return TypeFactory.defaultInstance().constructType(typeReference);
 	}

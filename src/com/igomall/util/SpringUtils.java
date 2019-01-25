@@ -60,7 +60,7 @@ public final class SpringUtils implements ApplicationContextAware, DisposableBea
 	 * @return 实例
 	 */
 	public static Object getBean(String name) {
-		Assert.hasText(name,"");
+		Assert.hasText(name);
 
 		return applicationContext.getBean(name);
 	}
@@ -73,7 +73,7 @@ public final class SpringUtils implements ApplicationContextAware, DisposableBea
 	 * @return 实例
 	 */
 	public static <T> T getBean(Class<T> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		return applicationContext.getBean(type);
 	}
@@ -88,8 +88,8 @@ public final class SpringUtils implements ApplicationContextAware, DisposableBea
 	 * @return 实例
 	 */
 	public static <T> T getBean(String name, Class<T> type) {
-		Assert.hasText(name,"");
-		Assert.notNull(type,"");
+		Assert.hasText(name);
+		Assert.notNull(type);
 
 		return applicationContext.getBean(name, type);
 	}
@@ -102,7 +102,7 @@ public final class SpringUtils implements ApplicationContextAware, DisposableBea
 	 * @return 实例
 	 */
 	public static <T> Map<String, T> getBeansOfType(Class<T> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		return applicationContext.getBeansOfType(type);
 	}
@@ -117,7 +117,7 @@ public final class SpringUtils implements ApplicationContextAware, DisposableBea
 	 * @return 国际化消息
 	 */
 	public static String getMessage(String code, Object... args) {
-		Assert.hasText(code,"");
+		Assert.hasText(code);
 
 		LocaleResolver localeResolver = getBean("localeResolver", LocaleResolver.class);
 		Locale locale = localeResolver.resolveLocale(null);

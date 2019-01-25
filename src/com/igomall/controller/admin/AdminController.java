@@ -1,4 +1,8 @@
-
+/*
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
+ */
 package com.igomall.controller.admin;
 
 import java.util.HashSet;
@@ -84,6 +88,7 @@ public class AdminController extends BaseController {
 		admin.setLockDate(null);
 		admin.setLastLoginIp(null);
 		admin.setLastLoginDate(null);
+		admin.setPaymentTransactions(null);
 		adminService.save(admin);
 		addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
 		return "redirect:list";

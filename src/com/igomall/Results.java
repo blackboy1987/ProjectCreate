@@ -109,9 +109,9 @@ public final class Results {
 	 *            数据
 	 */
 	public static void status(HttpServletResponse response, HttpStatus httpStatus, Object data) {
-		Assert.notNull(response,"");
-		Assert.notNull(httpStatus,"");
-		Assert.notNull(data,"");
+		Assert.notNull(response);
+		Assert.notNull(httpStatus);
+		Assert.notNull(data);
 
 		response.setContentType(JSON_CONTENT_TYPE);
 		response.setStatus(httpStatus.value());
@@ -135,9 +135,9 @@ public final class Results {
 	 *            参数
 	 */
 	public static void status(HttpServletResponse response, HttpStatus httpStatus, String message, Object... args) {
-		Assert.notNull(response,"");
-		Assert.notNull(httpStatus,"");
-		Assert.hasText(message,"");
+		Assert.notNull(response);
+		Assert.notNull(httpStatus);
+		Assert.hasText(message);
 
 		Map<String, String> data = new HashMap<>();
 		data.put(MESSAGE_KEY, SpringUtils.getMessage(message, args));
@@ -154,8 +154,8 @@ public final class Results {
 	 * @return ResponseEntity
 	 */
 	public static <T> ResponseEntity<T> status(HttpStatus httpStatus, T data) {
-		Assert.notNull(httpStatus,"");
-		Assert.notNull(data,"");
+		Assert.notNull(httpStatus);
+		Assert.notNull(data);
 
 		return new ResponseEntity<>(data, httpStatus);
 	}
@@ -172,8 +172,8 @@ public final class Results {
 	 * @return ResponseEntity
 	 */
 	public static ResponseEntity<Map<String, String>> status(HttpStatus httpStatus, String message, Object... args) {
-		Assert.notNull(httpStatus,"");
-		Assert.hasText(message,"");
+		Assert.notNull(httpStatus);
+		Assert.hasText(message);
 
 		Map<String, String> data = new HashMap<>();
 		data.put(MESSAGE_KEY, SpringUtils.getMessage(message, args));

@@ -1,7 +1,7 @@
 /*
-
-
-
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
  */
 package com.igomall.entity;
 
@@ -87,6 +87,12 @@ public abstract class User extends BaseEntity<Long> {
 	 */
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Set<SocialUser> socialUsers = new HashSet<>();
+
+	/**
+	 * 支付事务
+	 */
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<PaymentTransaction> paymentTransactions = new HashSet<>();
 
 	/**
 	 * 审计日志
@@ -206,6 +212,25 @@ public abstract class User extends BaseEntity<Long> {
 	 */
 	public void setSocialUsers(Set<SocialUser> socialUsers) {
 		this.socialUsers = socialUsers;
+	}
+
+	/**
+	 * 获取支付事务
+	 * 
+	 * @return 支付事务
+	 */
+	public Set<PaymentTransaction> getPaymentTransactions() {
+		return paymentTransactions;
+	}
+
+	/**
+	 * 设置支付事务
+	 * 
+	 * @param paymentTransactions
+	 *            支付事务
+	 */
+	public void setPaymentTransactions(Set<PaymentTransaction> paymentTransactions) {
+		this.paymentTransactions = paymentTransactions;
 	}
 
 	/**

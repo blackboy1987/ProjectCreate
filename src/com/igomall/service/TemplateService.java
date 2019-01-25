@@ -1,22 +1,56 @@
-
+/*
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
+ */
 package com.igomall.service;
 
-import java.util.List;
+import com.igomall.TemplateConfig;
 
-import com.igomall.Template;
-
+/**
+ * Service - 模板
+ * 
+ * @author IGOMALL  Team
+ * @version 1.0
+ */
 public interface TemplateService {
 
-	List<Template> getAll();
+	/**
+	 * 读取模板文件内容
+	 * 
+	 * @param templateConfigId
+	 *            模板配置ID
+	 * @return 模板文件内容
+	 */
+	String read(String templateConfigId);
 
-	Template get(String id);
+	/**
+	 * 读取模板文件内容
+	 * 
+	 * @param templateConfig
+	 *            模板配置
+	 * @return 模板文件内容
+	 */
+	String read(TemplateConfig templateConfig);
 
-	String read(String id);
+	/**
+	 * 写入模板文件内容
+	 * 
+	 * @param templateConfigId
+	 *            模板配置ID
+	 * @param content
+	 *            模板文件内容
+	 */
+	void write(String templateConfigId, String content);
 
-	String read(Template template);
-
-	void write(String id, String content);
-
-	void write(Template template, String content);
+	/**
+	 * 写入模板文件内容
+	 * 
+	 * @param templateConfig
+	 *            模板配置
+	 * @param content
+	 *            模板文件内容
+	 */
+	void write(TemplateConfig templateConfig, String content);
 
 }

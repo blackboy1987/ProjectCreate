@@ -104,7 +104,7 @@ public final class WebUtils {
 	 * @return 是否为AJAX请求
 	 */
 	public static boolean isAjaxRequest(HttpServletRequest request) {
-		Assert.notNull(request,"");
+		Assert.notNull(request);
 
 		return StringUtils.equalsIgnoreCase(request.getHeader("X-Requested-With"), "XMLHttpRequest");
 	}
@@ -130,10 +130,10 @@ public final class WebUtils {
 	 *            是否启用加密
 	 */
 	public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name, String value, Integer maxAge, String path, String domain, Boolean secure) {
-		Assert.notNull(request,"");
-		Assert.notNull(response,"");
-		Assert.hasText(name,"");
-		Assert.hasText(value,"");
+		Assert.notNull(request);
+		Assert.notNull(response);
+		Assert.hasText(name);
+		Assert.hasText(value);
 
 		try {
 			name = URLEncoder.encode(name, "UTF-8");
@@ -172,10 +172,10 @@ public final class WebUtils {
 	 *            有效期(单位: 秒)
 	 */
 	public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name, String value, Integer maxAge) {
-		Assert.notNull(request,"");
-		Assert.notNull(response,"");
-		Assert.hasText(name,"");
-		Assert.hasText(value,"");
+		Assert.notNull(request);
+		Assert.notNull(response);
+		Assert.hasText(name);
+		Assert.hasText(value);
 
 		Setting setting = SystemUtils.getSetting();
 		addCookie(request, response, name, value, maxAge, setting.getCookiePath(), setting.getCookieDomain(), null);
@@ -194,10 +194,10 @@ public final class WebUtils {
 	 *            Cookie值
 	 */
 	public static void addCookie(HttpServletRequest request, HttpServletResponse response, String name, String value) {
-		Assert.notNull(request,"");
-		Assert.notNull(response,"");
-		Assert.hasText(name,"");
-		Assert.hasText(value,"");
+		Assert.notNull(request);
+		Assert.notNull(response);
+		Assert.hasText(name);
+		Assert.hasText(value);
 
 		Setting setting = SystemUtils.getSetting();
 		addCookie(request, response, name, value, null, setting.getCookiePath(), setting.getCookieDomain(), null);
@@ -213,8 +213,8 @@ public final class WebUtils {
 	 * @return Cookie值，若不存在则返回null
 	 */
 	public static String getCookie(HttpServletRequest request, String name) {
-		Assert.notNull(request,"");
-		Assert.hasText(name,"");
+		Assert.notNull(request);
+		Assert.hasText(name);
 
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
@@ -247,9 +247,9 @@ public final class WebUtils {
 	 *            域
 	 */
 	public static void removeCookie(HttpServletRequest request, HttpServletResponse response, String name, String path, String domain) {
-		Assert.notNull(request,"");
-		Assert.notNull(response,"");
-		Assert.hasText(name,"");
+		Assert.notNull(request);
+		Assert.notNull(response);
+		Assert.hasText(name);
 
 		try {
 			name = URLEncoder.encode(name, "UTF-8");
@@ -278,9 +278,9 @@ public final class WebUtils {
 	 *            Cookie名称
 	 */
 	public static void removeCookie(HttpServletRequest request, HttpServletResponse response, String name) {
-		Assert.notNull(request,"");
-		Assert.notNull(response,"");
-		Assert.hasText(name,"");
+		Assert.notNull(request);
+		Assert.notNull(response);
+		Assert.hasText(name);
 
 		Setting setting = SystemUtils.getSetting();
 		removeCookie(request, response, name, setting.getCookiePath(), setting.getCookieDomain());
@@ -296,7 +296,7 @@ public final class WebUtils {
 	 * @return 参数
 	 */
 	public static Map<String, String> parse(String query, String encoding) {
-		Assert.hasText(query,"");
+		Assert.hasText(query);
 
 		Charset charset;
 		if (StringUtils.isNotEmpty(encoding)) {
@@ -320,7 +320,7 @@ public final class WebUtils {
 	 * @return 参数
 	 */
 	public static Map<String, String> parse(String query) {
-		Assert.hasText(query,"");
+		Assert.hasText(query);
 
 		return parse(query, null);
 	}
@@ -340,9 +340,9 @@ public final class WebUtils {
 	 *            是否兼容HTTP1.0
 	 */
 	public static void sendRedirect(HttpServletRequest request, HttpServletResponse response, String url, boolean contextRelative, boolean http10Compatible) {
-		Assert.notNull(request,"");
-		Assert.notNull(response,"");
-		Assert.hasText(url,"");
+		Assert.notNull(request);
+		Assert.notNull(response);
+		Assert.hasText(url);
 
 		StringBuilder targetUrl = new StringBuilder();
 		if (contextRelative && url.startsWith("/")) {
@@ -386,7 +386,7 @@ public final class WebUtils {
 	 * @return 返回结果
 	 */
 	public static String post(String url, Map<String, Object> parameterMap) {
-		Assert.hasText(url,"");
+		Assert.hasText(url);
 
 		String result = null;
 		try {
@@ -437,7 +437,7 @@ public final class WebUtils {
 	 * @return 返回结果
 	 */
 	public static String get(String url, Map<String, Object> parameterMap) {
-		Assert.hasText(url,"");
+		Assert.hasText(url);
 
 		String result = null;
 		try {
@@ -487,7 +487,7 @@ public final class WebUtils {
 	 * @return 返回结果
 	 */
 	public static String post(String url, String xml) {
-		Assert.hasText(url,"");
+		Assert.hasText(url);
 
 		String result = null;
 		try {

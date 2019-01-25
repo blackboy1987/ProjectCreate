@@ -70,7 +70,7 @@ public final class RSAUtils {
 	 * @return 密钥对
 	 */
 	public static KeyPair generateKeyPair(int keySize) {
-		Assert.state(keySize > 0,"");
+		Assert.state(keySize > 0);
 
 		try {
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM, PROVIDER);
@@ -89,7 +89,7 @@ public final class RSAUtils {
 	 * @return 私钥
 	 */
 	public static PrivateKey generatePrivateKey(byte[] encodedKey) {
-		Assert.notNull(encodedKey,"");
+		Assert.notNull(encodedKey);
 
 		try {
 			KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM, PROVIDER);
@@ -109,7 +109,7 @@ public final class RSAUtils {
 	 * @return 私钥
 	 */
 	public static PrivateKey generatePrivateKey(String keyString) {
-		Assert.hasText(keyString,"");
+		Assert.hasText(keyString);
 
 		return generatePrivateKey(Base64.decodeBase64(keyString));
 	}
@@ -122,7 +122,7 @@ public final class RSAUtils {
 	 * @return 公钥
 	 */
 	public static PublicKey generatePublicKey(byte[] encodedKey) {
-		Assert.notNull(encodedKey,"");
+		Assert.notNull(encodedKey);
 
 		try {
 			KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM, PROVIDER);
@@ -142,7 +142,7 @@ public final class RSAUtils {
 	 * @return 公钥
 	 */
 	public static PublicKey generatePublicKey(String keyString) {
-		Assert.hasText(keyString,"");
+		Assert.hasText(keyString);
 
 		return generatePublicKey(Base64.decodeBase64(keyString));
 	}
@@ -155,7 +155,7 @@ public final class RSAUtils {
 	 * @return 密钥字符串(BASE64编码)
 	 */
 	public static String getKeyString(Key key) {
-		Assert.notNull(key,"");
+		Assert.notNull(key);
 
 		return Base64.encodeBase64String(key.getEncoded());
 	}
@@ -172,8 +172,8 @@ public final class RSAUtils {
 	 * @return 密钥
 	 */
 	public static Key getKey(String type, InputStream inputStream, String password) {
-		Assert.hasText(type,"");
-		Assert.notNull(inputStream,"");
+		Assert.hasText(type);
+		Assert.notNull(inputStream);
 
 		try {
 			KeyStore keyStore = KeyStore.getInstance(type, PROVIDER);
@@ -203,8 +203,8 @@ public final class RSAUtils {
 	 * @return 证书
 	 */
 	public static Certificate getCertificate(String type, InputStream inputStream) {
-		Assert.hasText(type,"");
-		Assert.notNull(inputStream,"");
+		Assert.hasText(type);
+		Assert.notNull(inputStream);
 
 		try {
 			CertificateFactory certificateFactory = CertificateFactory.getInstance(type, PROVIDER);
@@ -226,9 +226,9 @@ public final class RSAUtils {
 	 * @return 签名
 	 */
 	public static byte[] sign(String algorithm, PrivateKey privateKey, byte[] data) {
-		Assert.hasText(algorithm,"");
-		Assert.notNull(privateKey,"");
-		Assert.notNull(data,"");
+		Assert.hasText(algorithm);
+		Assert.notNull(privateKey);
+		Assert.notNull(data);
 
 		try {
 			Signature signature = Signature.getInstance(algorithm, PROVIDER);
@@ -258,10 +258,10 @@ public final class RSAUtils {
 	 * @return 是否验证通过
 	 */
 	public static boolean verify(String algorithm, PublicKey publicKey, byte[] sign, byte[] data) {
-		Assert.hasText(algorithm,"");
-		Assert.notNull(publicKey,"");
-		Assert.notNull(sign,"");
-		Assert.notNull(data,"");
+		Assert.hasText(algorithm);
+		Assert.notNull(publicKey);
+		Assert.notNull(sign);
+		Assert.notNull(data);
 
 		try {
 			Signature signature = Signature.getInstance(algorithm, PROVIDER);
@@ -291,10 +291,10 @@ public final class RSAUtils {
 	 * @return 是否验证通过
 	 */
 	public static boolean verify(String algorithm, Certificate certificate, byte[] sign, byte[] data) {
-		Assert.hasText(algorithm,"");
-		Assert.notNull(certificate,"");
-		Assert.notNull(sign,"");
-		Assert.notNull(data,"");
+		Assert.hasText(algorithm);
+		Assert.notNull(certificate);
+		Assert.notNull(sign);
+		Assert.notNull(data);
 
 		try {
 			Signature signature = Signature.getInstance(algorithm, PROVIDER);
@@ -320,8 +320,8 @@ public final class RSAUtils {
 	 * @return 密文
 	 */
 	public static byte[] encrypt(PublicKey publicKey, byte[] data) {
-		Assert.notNull(publicKey,"");
-		Assert.notNull(data,"");
+		Assert.notNull(publicKey);
+		Assert.notNull(data);
 
 		try {
 			Cipher cipher = Cipher.getInstance(TRANSFORMATION, PROVIDER);
@@ -350,8 +350,8 @@ public final class RSAUtils {
 	 * @return 明文
 	 */
 	public static byte[] decrypt(PrivateKey privateKey, byte[] data) {
-		Assert.notNull(privateKey,"");
-		Assert.notNull(data,"");
+		Assert.notNull(privateKey);
+		Assert.notNull(data);
 
 		try {
 			Cipher cipher = Cipher.getInstance(TRANSFORMATION, PROVIDER);

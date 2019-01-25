@@ -53,9 +53,9 @@ public final class CompressUtils {
 	 *            字符集编码
 	 */
 	public static void archive(File[] srcFiles, File destFile, String archiverName, String encoding) {
-		Assert.notNull(destFile,"");
-		Assert.state(!destFile.exists() || destFile.isFile(),"");
-		Assert.hasText(archiverName,"");
+		Assert.notNull(destFile);
+		Assert.state(!destFile.exists() || destFile.isFile());
+		Assert.hasText(archiverName);
 
 		File destDir = destFile.getParentFile();
 		if (destDir != null) {
@@ -66,7 +66,6 @@ public final class CompressUtils {
 			archiveOutputStream = new ArchiveStreamFactory(encoding).createArchiveOutputStream(archiverName, new BufferedOutputStream(new FileOutputStream(destFile)));
 			if (ArrayUtils.isNotEmpty(srcFiles)) {
 				for (File srcFile : srcFiles) {
-					System.out.println(srcFile.getAbsolutePath());
 					if (srcFile == null || !srcFile.exists()) {
 						continue;
 					}
@@ -170,11 +169,11 @@ public final class CompressUtils {
 	 *            字符集编码
 	 */
 	public static void extract(File srcFile, File destDir, String encoding) {
-		Assert.notNull(srcFile,"");
-		Assert.state(srcFile.exists(),"");
-		Assert.state(srcFile.isFile(),"");
-		Assert.notNull(destDir,"");
-		Assert.state(destDir.mkdirs() || destDir.isDirectory(),"");
+		Assert.notNull(srcFile);
+		Assert.state(srcFile.exists());
+		Assert.state(srcFile.isFile());
+		Assert.notNull(destDir);
+		Assert.state(destDir.mkdirs() || destDir.isDirectory());
 
 		ArchiveInputStream archiveInputStream = null;
 		try {
@@ -220,10 +219,4 @@ public final class CompressUtils {
 		extract(srcFile, destDir, null);
 	}
 
-	public static void main(String[] args) {
-		String path = "D:\\apache-maven-3.5.4";
-		String path1 = "D:\\a.zip";
-		archive(new File(path), new File(path1), "zip");
-	}
-	
 }

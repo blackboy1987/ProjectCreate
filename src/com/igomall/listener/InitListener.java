@@ -10,7 +10,11 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import com.igomall.entity.Article;
+import com.igomall.entity.Product;
+import com.igomall.entity.Store;
 import com.igomall.service.ConfigService;
+import com.igomall.service.SearchService;
 
 /**
  * Listener - 初始化
@@ -31,6 +35,8 @@ public class InitListener {
 
 	@Inject
 	private ConfigService configService;
+	@Inject
+	private SearchService searchService;
 
 	/**
 	 * 事件处理
@@ -47,6 +53,9 @@ public class InitListener {
 		String info = "I|n|i|t|i|a|l|i|z|i|n|g| |S|H|O|P|+|+| |B|2|B|2|C| |" + systemVersion;
 		LOGGER.info(info.replace("|", ""));
 		configService.init();
+		searchService.index(Article.class);
+		searchService.index(Product.class);
+		searchService.index(Store.class);
 	}
 
 }

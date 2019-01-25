@@ -18,6 +18,8 @@
 			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
 			<bean class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
 			<bean class="com.igomall.security.CurrentUserMethodArgumentResolver" />
+			<bean class="com.igomall.security.CurrentCartMethodArgumentResolver" />
+			<bean class="com.igomall.security.CurrentStoreMethodArgumentResolver" />
 			<bean class="com.igomall.audit.AuditLogMethodArgumentResolver" />
 		</mvc:argument-resolvers>
 		<mvc:message-converters>
@@ -33,10 +35,10 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" cache-period="0" />
-	<mvc:resources mapping="/robots.txt" location="/robots.txt" cache-period="0" />
-	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="0" />
-	<mvc:resources mapping="/upload/**" location="/upload/" cache-period="0" />
+	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" cache-period="86400" />
+	<mvc:resources mapping="/robots.txt" location="/robots.txt" cache-period="86400" />
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="86400" />
+	<mvc:resources mapping="/upload/**" location="/upload/" cache-period="86400" />
 
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -46,13 +48,27 @@
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/api/**" />
-			<bean class="com.igomall.interceptor.CorsInterceptor" />
-		</mvc:interceptor>
-		<mvc:interceptor>
+			<mvc:mapping path="/cart/**" />
+			<mvc:mapping path="/order/**" />
+			<mvc:mapping path="/member/**" />
+			<mvc:mapping path="/business/**" />
 			<mvc:mapping path="/admin/**" />
 			<bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
 				<property name="cacheSeconds" value="0" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/cart/**" />
+			<mvc:mapping path="/order/**" />
+			<mvc:mapping path="/member/**" />
+			<bean class="com.igomall.security.CurrentUserHandlerInterceptor">
+				<property name="userClass" value="com.igomall.entity.Member" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/business/**" />
+			<bean class="com.igomall.security.CurrentUserHandlerInterceptor">
+				<property name="userClass" value="com.igomall.entity.Business" />
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
@@ -62,19 +78,73 @@
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
+			<mvc:mapping path="/cart/**" />
+			<mvc:mapping path="/order/**" />
+			<bean class="com.igomall.security.CurrentCartHandlerInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/business/**" />
+			<bean class="com.igomall.security.CurrentStoreHandlerInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/api/**" />
+			<mvc:exclude-mapping path="/payment/**" />
 			<bean class="com.igomall.security.CsrfInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/admin/**" />
+			<mvc:exclude-mapping path="/business/product/**" />
+			<mvc:exclude-mapping path="/business/delivery_template/**" />
+			<mvc:exclude-mapping path="/business/discount_promotion/**" />
+			<mvc:exclude-mapping path="/business/full_reduction_promotion/**" />
+			<mvc:exclude-mapping path="/business/coupon/**" />
 			<bean class="com.igomall.interceptor.ValidateInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/business/product/**" />
+			<mvc:mapping path="/business/delivery_template/**" />
+			<mvc:mapping path="/business/discount_promotion/**" />
+			<mvc:mapping path="/business/full_reduction_promotion/**" />
+			<mvc:mapping path="/business/coupon/**" />
+			<bean class="com.igomall.interceptor.ValidateInterceptor">
+				<property name="whitelistType" value="relaxed" />
+			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor">
 				<property name="entityManagerFactory" ref="entityManagerFactory" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/member/register/submit" />
+			<bean class="com.igomall.captcha.CaptchaInterceptor">
+				<property name="captchaType" value="memberRegister" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/business/register/submit" />
+			<bean class="com.igomall.captcha.CaptchaInterceptor">
+				<property name="captchaType" value="businessRegister" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/review/save" />
+			<bean class="com.igomall.captcha.CaptchaInterceptor">
+				<property name="captchaType" value="review" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/consultation/save" />
+			<bean class="com.igomall.captcha.CaptchaInterceptor">
+				<property name="captchaType" value="consultation" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/password/forgot" />
+			<bean class="com.igomall.captcha.CaptchaInterceptor">
+				<property name="captchaType" value="forgotPassword" />
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
@@ -90,6 +160,14 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**" />
 			<bean class="com.igomall.audit.AuditLogInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/business/discount_promotion/**" />
+			<mvc:mapping path="/business/full_reduction_promotion/**" />
+			<mvc:exclude-mapping path="/business/*/calculate" />
+			<mvc:exclude-mapping path="/business/*/end_date" />
+			<mvc:exclude-mapping path="/business/*/buy" />
+			<bean class="com.igomall.interceptor.PromotionPluginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

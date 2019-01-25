@@ -1,4 +1,8 @@
-
+/*
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
+ */
 package com.igomall.controller.shop;
 
 import org.springframework.stereotype.Controller;
@@ -14,15 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller("shopIndexController")
 @RequestMapping("/")
-public class IndexController {
+public class IndexController extends BaseController {
 
 	/**
 	 * 首页
 	 */
 	@GetMapping
 	public String index(ModelMap model) {
-		return "redirect:/admin/index";
-		//return "shop/index";
+		return "shop/index";
 	}
 
 }

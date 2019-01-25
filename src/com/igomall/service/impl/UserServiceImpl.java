@@ -1,7 +1,7 @@
 /*
-
-
-
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
  */
 package com.igomall.service.impl;
 
@@ -79,8 +79,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	@Transactional(noRollbackFor = AuthenticationException.class)
 	public User getUser(AuthenticationToken authenticationToken) {
-		Assert.notNull(authenticationToken,"");
-		Assert.state(authenticationToken instanceof UserAuthenticationToken || authenticationToken instanceof SocialUserAuthenticationToken,"");
+		Assert.notNull(authenticationToken);
+		Assert.state(authenticationToken instanceof UserAuthenticationToken || authenticationToken instanceof SocialUserAuthenticationToken);
 
 		User user = null;
 		if (authenticationToken instanceof UserAuthenticationToken) {
@@ -126,15 +126,15 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	@Transactional(readOnly = true)
 	public Set<String> getPermissions(User user) {
-		Assert.notNull(user,"");
+		Assert.notNull(user);
 
 		AuthenticationProvider authenticationProvider = getAuthenticationProvider(user.getClass());
 		return authenticationProvider != null ? authenticationProvider.getPermissions(user) : null;
 	}
 
 	public void register(User user) {
-		Assert.notNull(user,"");
-		Assert.isTrue(user.isNew(),"");
+		Assert.notNull(user);
+		Assert.isTrue(user.isNew());
 
 		userDao.persist(user);
 
@@ -142,7 +142,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	}
 
 	public void login(AuthenticationToken authenticationToken) {
-		Assert.notNull(authenticationToken,"");
+		Assert.notNull(authenticationToken);
 
 		Subject subject = SecurityUtils.getSubject();
 		subject.login(authenticationToken);
@@ -183,8 +183,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	@Transactional(readOnly = true)
 	public int getFailedLoginAttempts(User user) {
-		Assert.notNull(user,"");
-		Assert.isTrue(!user.isNew(),"");
+		Assert.notNull(user);
+		Assert.isTrue(!user.isNew());
 
 		Ehcache cache = cacheManager.getEhcache(User.FAILED_LOGIN_ATTEMPTS_CACHE_NAME);
 		Element element = cache.get(user.getId());
@@ -194,8 +194,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	@Transactional(readOnly = true)
 	public void addFailedLoginAttempt(User user) {
-		Assert.notNull(user,"");
-		Assert.isTrue(!user.isNew(),"");
+		Assert.notNull(user);
+		Assert.isTrue(!user.isNew());
 
 		Long userId = user.getId();
 		Ehcache cache = cacheManager.getEhcache(User.FAILED_LOGIN_ATTEMPTS_CACHE_NAME);
@@ -215,16 +215,16 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 
 	@Transactional(readOnly = true)
 	public void resetFailedLoginAttempts(User user) {
-		Assert.notNull(user,"");
-		Assert.isTrue(!user.isNew(),"");
+		Assert.notNull(user);
+		Assert.isTrue(!user.isNew());
 
 		Ehcache cache = cacheManager.getEhcache(User.FAILED_LOGIN_ATTEMPTS_CACHE_NAME);
 		cache.remove(user.getId());
 	}
 
 	public boolean tryLock(User user) {
-		Assert.notNull(user,"");
-		Assert.isTrue(!user.isNew(),"");
+		Assert.notNull(user);
+		Assert.isTrue(!user.isNew());
 
 		if (BooleanUtils.isTrue(user.getIsLocked())) {
 			return true;
@@ -243,8 +243,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	}
 
 	public boolean tryUnlock(User user) {
-		Assert.notNull(user,"");
-		Assert.isTrue(!user.isNew(),"");
+		Assert.notNull(user);
+		Assert.isTrue(!user.isNew());
 
 		if (BooleanUtils.isFalse(user.getIsLocked())) {
 			return true;
@@ -263,8 +263,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	}
 
 	public void unlock(User user) {
-		Assert.notNull(user,"");
-		Assert.isTrue(!user.isNew(),"");
+		Assert.notNull(user);
+		Assert.isTrue(!user.isNew());
 
 		if (BooleanUtils.isFalse(user.getIsLocked())) {
 			return;
@@ -325,7 +325,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
 	 * @return 认证Provider，若不存在则返回null
 	 */
 	private AuthenticationProvider getAuthenticationProvider(Class<?> userClass) {
-		Assert.notNull(userClass,"");
+		Assert.notNull(userClass);
 
 		if (AUTHENTICATION_PROVIDER_CACHE.containsKey(userClass)) {
 			return AUTHENTICATION_PROVIDER_CACHE.get(userClass);

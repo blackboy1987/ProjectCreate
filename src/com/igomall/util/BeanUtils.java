@@ -83,8 +83,8 @@ public final class BeanUtils {
 	 *            值
 	 */
 	public static void setField(Field field, Object target, Object value) {
-		Assert.notNull(field,"");
-		Assert.notNull(target,"");
+		Assert.notNull(field);
+		Assert.notNull(target);
 
 		try {
 			field.set(target, value);
@@ -105,8 +105,8 @@ public final class BeanUtils {
 	 * @return 结果
 	 */
 	public static Object invokeMethod(Method method, Object target, Object... args) {
-		Assert.notNull(method,"");
-		Assert.notNull(target,"");
+		Assert.notNull(method);
+		Assert.notNull(target);
 
 		try {
 			return method.invoke(target, args);
@@ -129,8 +129,8 @@ public final class BeanUtils {
 	 * @return Field，包含父类Field
 	 */
 	public static List<Field> findFields(Class<?> type, Class<? extends Annotation> annotationType) {
-		Assert.notNull(type,"");
-		Assert.notNull(annotationType,"");
+		Assert.notNull(type);
+		Assert.notNull(annotationType);
 
 		List<Field> result = new ArrayList<>();
 		Class<?> targetClass = type;
@@ -155,8 +155,8 @@ public final class BeanUtils {
 	 * @return Method，包含父类Method
 	 */
 	public static List<Method> findMethods(Class<?> type, Class<? extends Annotation> annotationType) {
-		Assert.notNull(type,"");
-		Assert.notNull(annotationType,"");
+		Assert.notNull(type);
+		Assert.notNull(annotationType);
 
 		List<Method> result = new ArrayList<>();
 		Class<?> targetClass = type;
@@ -181,8 +181,8 @@ public final class BeanUtils {
 	 * @return PropertyDescriptor
 	 */
 	public static List<PropertyDescriptor> getPropertyDescriptors(Class<?> type, Class<? extends Annotation> annotationType) {
-		Assert.notNull(type,"");
-		Assert.notNull(annotationType,"");
+		Assert.notNull(type);
+		Assert.notNull(annotationType);
 
 		List<PropertyDescriptor> result = new ArrayList<>();
 		for (PropertyDescriptor propertyDescriptor : getPropertyDescriptors(type)) {
@@ -210,8 +210,8 @@ public final class BeanUtils {
 	 * @return Annotation
 	 */
 	private static <A extends Annotation> A getAnnotation(AnnotatedElement annotatedElement, Class<A> annotationType) {
-		Assert.notNull(annotatedElement,"");
-		Assert.notNull(annotationType,"");
+		Assert.notNull(annotatedElement);
+		Assert.notNull(annotationType);
 
 		A annotation = annotatedElement.getAnnotation(annotationType);
 		if (annotation == null) {
@@ -233,7 +233,7 @@ public final class BeanUtils {
 	 * @return Field
 	 */
 	private static Field[] getDeclaredFields(Class<?> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		Field[] result = DECLARED_FIELDS_CACHE.get(type);
 		if (result == null) {
@@ -251,7 +251,7 @@ public final class BeanUtils {
 	 * @return Method
 	 */
 	private static Method[] getDeclaredMethods(Class<?> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		Method[] result = DECLARED_METHODS_CACHE.get(type);
 		if (result == null) {
@@ -271,7 +271,7 @@ public final class BeanUtils {
 	 * @return 接口实现Method
 	 */
 	private static Method[] findConcreteMethodsOnInterfaces(Class<?> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		List<Method> foundMethods = new ArrayList<>();
 		for (Class<?> ifc : type.getInterfaces()) {
@@ -292,7 +292,7 @@ public final class BeanUtils {
 	 * @return PropertyDescriptor
 	 */
 	private static PropertyDescriptor[] getPropertyDescriptors(Class<?> type) {
-		Assert.notNull(type,"");
+		Assert.notNull(type);
 
 		PropertyDescriptor[] result = PROPERTY_DESCRIPTORS_CACHE.get(type);
 		if (result == null) {

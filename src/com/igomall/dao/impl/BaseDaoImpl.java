@@ -1,5 +1,36 @@
-
+/*
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
+ */
 package com.igomall.dao.impl;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.From;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.core.ResolvableType;
+import org.springframework.util.Assert;
 
 import com.igomall.Filter;
 import com.igomall.Order;
@@ -8,25 +39,10 @@ import com.igomall.Pageable;
 import com.igomall.dao.BaseDao;
 import com.igomall.entity.BaseEntity;
 import com.igomall.entity.OrderedEntity;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.BooleanUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.core.ResolvableType;
-import org.springframework.util.Assert;
-
-import javax.persistence.*;
-import javax.persistence.criteria.*;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Dao - 基类
- *
+ * 
  * @author IGOMALL  Team
  * @version 1.0
  */
@@ -65,7 +81,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	}
 
 	public boolean exists(String attributeName, Object attributeValue) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
@@ -76,24 +92,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 		return query.getSingleResult() > 0;
 	}
 
-	public boolean exists(Map<String,Object> attributes) {
-		Assert.notNull(attributes,"");
-
-		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-		Root<T> root = criteriaQuery.from(entityClass);
-		criteriaQuery.select(criteriaBuilder.count(root));
-		Predicate restrictions = criteriaBuilder.conjunction();
-		for (String attributeName : attributes.keySet()) {
-			restrictions = criteriaBuilder.and(restrictions, criteriaBuilder.equal(root.get(attributeName), attributes.get(attributeName)));
-		}
-		criteriaQuery.where(restrictions);
-		TypedQuery<Long> query = entityManager.createQuery(criteriaQuery);
-		return query.getSingleResult() > 0;
-	}
-	
 	public boolean exists(String attributeName, String attributeValue, boolean ignoreCase) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
@@ -109,7 +109,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	}
 
 	public boolean unique(ID id, String attributeName, Object attributeValue) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		if (id != null) {
 			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -125,7 +125,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	}
 
 	public boolean unique(ID id, String attributeName, String attributeValue, boolean ignoreCase) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		if (id != null) {
 			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -163,19 +163,19 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	}
 
 	public T find(String attributeName, Object attributeValue) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		return find(attributeName, attributeValue, null);
 	}
 
 	public T find(String attributeName, String attributeValue, boolean ignoreCase) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		return find(attributeName, attributeValue, ignoreCase, null);
 	}
 
 	public T find(String attributeName, Object attributeValue, LockModeType lockModeType) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
@@ -194,7 +194,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	}
 
 	public T find(String attributeName, String attributeValue, boolean ignoreCase, LockModeType lockModeType) {
-		Assert.hasText(attributeName,"");
+		Assert.hasText(attributeName);
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
@@ -239,13 +239,13 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	}
 
 	public void persist(T entity) {
-		Assert.notNull(entity,"");
+		Assert.notNull(entity);
 
 		entityManager.persist(entity);
 	}
 
 	public T merge(T entity) {
-		Assert.notNull(entity,"");
+		Assert.notNull(entity);
 
 		return entityManager.merge(entity);
 	}
@@ -274,26 +274,26 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 
 	@SuppressWarnings("unchecked")
 	public ID getIdentifier(T entity) {
-		Assert.notNull(entity,"");
+		Assert.notNull(entity);
 
 		return (ID) entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity);
 	}
 
 	public boolean isLoaded(T entity) {
-		Assert.notNull(entity,"");
+		Assert.notNull(entity);
 
 		return entityManager.getEntityManagerFactory().getPersistenceUnitUtil().isLoaded(entity);
 	}
 
 	public boolean isLoaded(T entity, String attributeName) {
-		Assert.notNull(entity,"");
-		Assert.hasText(attributeName,"");
+		Assert.notNull(entity);
+		Assert.hasText(attributeName);
 
 		return entityManager.getEntityManagerFactory().getPersistenceUnitUtil().isLoaded(entity, attributeName);
 	}
 
 	public boolean isManaged(T entity) {
-		Assert.notNull(entity,"");
+		Assert.notNull(entity);
 
 		return entityManager.contains(entity);
 	}
@@ -305,7 +305,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	}
 
 	public LockModeType getLockMode(T entity) {
-		Assert.notNull(entity,"");
+		Assert.notNull(entity);
 
 		return entityManager.getLockMode(entity);
 	}
@@ -342,9 +342,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 * @return 实体对象集合
 	 */
 	protected List<T> findList(CriteriaQuery<T> criteriaQuery, Integer first, Integer count, List<Filter> filters, List<Order> orders, LockModeType lockModeType) {
-		Assert.notNull(criteriaQuery,"");
-		Assert.notNull(criteriaQuery.getSelection(),"");
-		Assert.notEmpty(criteriaQuery.getRoots(),"");
+		Assert.notNull(criteriaQuery);
+		Assert.notNull(criteriaQuery.getSelection());
+		Assert.notEmpty(criteriaQuery.getRoots());
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		Root<T> root = findRoot(criteriaQuery, criteriaQuery.getResultType());
@@ -435,9 +435,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 * @return 实体对象分页
 	 */
 	protected Page<T> findPage(CriteriaQuery<T> criteriaQuery, Pageable pageable, LockModeType lockModeType) {
-		Assert.notNull(criteriaQuery,"");
-		Assert.notNull(criteriaQuery.getSelection(),"");
-		Assert.notEmpty(criteriaQuery.getRoots(),"");
+		Assert.notNull(criteriaQuery);
+		Assert.notNull(criteriaQuery.getSelection());
+		Assert.notEmpty(criteriaQuery.getRoots());
 
 		if (pageable == null) {
 			pageable = new Pageable();
@@ -480,7 +480,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 			if (OrderedEntity.class.isAssignableFrom(entityClass)) {
 				orderList.add(criteriaBuilder.asc(getPath(root, OrderedEntity.ORDER_PROPERTY_NAME)));
 			} else {
-				orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.CREATED_DATE_PROPERTY_NAME)));
+				orderList.add(criteriaBuilder.desc(getPath(root, OrderedEntity.LAST_MODIFIED_DATE_PROPERTY_NAME)));
 			}
 		}
 		criteriaQuery.orderBy(orderList);
@@ -518,9 +518,9 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 * @return 实体对象数量
 	 */
 	protected Long count(CriteriaQuery<T> criteriaQuery, List<Filter> filters) {
-		Assert.notNull(criteriaQuery,"");
-		Assert.notNull(criteriaQuery.getSelection(),"");
-		Assert.notEmpty(criteriaQuery.getRoots(),"");
+		Assert.notNull(criteriaQuery);
+		Assert.notNull(criteriaQuery.getSelection());
+		Assert.notEmpty(criteriaQuery.getRoots());
 
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		Root<T> root = findRoot(criteriaQuery, criteriaQuery.getResultType());
@@ -563,8 +563,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 */
 	@SuppressWarnings("unchecked")
 	private Root<T> findRoot(CriteriaQuery<?> criteriaQuery, Class<T> clazz) {
-		Assert.notNull(criteriaQuery,"");
-		Assert.notNull(clazz,"");
+		Assert.notNull(criteriaQuery);
+		Assert.notNull(clazz);
 
 		for (Root<?> root : criteriaQuery.getRoots()) {
 			if (clazz.equals(root.getJavaType())) {
@@ -599,7 +599,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 * @return 别名
 	 */
 	private synchronized String getOrCreateAlias(Selection<?> selection) {
-		Assert.notNull(selection,"");
+		Assert.notNull(selection);
 
 		String alias = selection.getAlias();
 		if (alias == null) {
@@ -622,8 +622,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 *            目标
 	 */
 	private void copyJoins(From<?, ?> from, From<?, ?> to) {
-		Assert.notNull(from,"");
-		Assert.notNull(to,"");
+		Assert.notNull(from);
+		Assert.notNull(to);
 
 		for (Join<?, ?> fromJoin : from.getJoins()) {
 			Join<?, ?> toJoin = to.join(fromJoin.getAttribute().getName(), fromJoin.getJoinType());
@@ -641,8 +641,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 *            目标
 	 */
 	private void copyFetches(From<?, ?> from, From<?, ?> to) {
-		Assert.notNull(from,"");
-		Assert.notNull(to,"");
+		Assert.notNull(from);
+		Assert.notNull(to);
 
 		for (Fetch<?, ?> fromFetch : from.getFetches()) {
 			Fetch<?, ?> toFetch = to.fetch(fromFetch.getAttribute().getName());
@@ -659,8 +659,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 *            目标
 	 */
 	private void copyFetches(Fetch<?, ?> from, Fetch<?, ?> to) {
-		Assert.notNull(from,"");
-		Assert.notNull(to,"");
+		Assert.notNull(from);
+		Assert.notNull(to);
 
 		for (Fetch<?, ?> fromFetch : from.getFetches()) {
 			Fetch<?, ?> toFetch = to.fetch(fromFetch.getAttribute().getName());
@@ -677,8 +677,8 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 	 *            目标
 	 */
 	private void copyCriteriaWithoutSelectionAndOrder(CriteriaQuery<?> from, CriteriaQuery<?> to) {
-		Assert.notNull(from,"");
-		Assert.notNull(to,"");
+		Assert.notNull(from);
+		Assert.notNull(to);
 
 		for (Root<?> root : from.getRoots()) {
 			Root<?> dest = to.from(root.getJavaType());
@@ -829,4 +829,5 @@ public abstract class BaseDaoImpl<T extends BaseEntity<ID>, ID extends Serializa
 		}
 		return orderList;
 	}
+
 }

@@ -1,7 +1,7 @@
 /*
-
-
-
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
  */
 package com.igomall.service.impl;
 
@@ -40,7 +40,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 	private CacheManager cacheManager;
 
 	public BufferedImage createImage(String captchaId) {
-		Assert.hasText(captchaId,"");
+		Assert.hasText(captchaId);
 
 		String captcha = captchaProducer.createText();
 		Ehcache cache = cacheManager.getEhcache(CAPTCHA_CACHE_NAME);

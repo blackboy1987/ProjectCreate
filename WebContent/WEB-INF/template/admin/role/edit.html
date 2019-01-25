@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>${message("admin.role.edit")}</title>
-<meta name="author" content="" />
-<meta name="copyright" content="" />
+<title>${message("admin.role.edit")} - Powered By IGOMALL</title>
+<meta name="author" content="IGOMALL Team" />
+<meta name="copyright" content="IGOMALL ++" />
 <link href="${base}/resources/admin/css/common.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.js"></script>
 <script type="text/javascript" src="${base}/resources/admin/js/jquery.validate.js"></script>
@@ -208,12 +208,6 @@ $().ready(function() {
 						<label>
 							<input type="checkbox" name="permissions" value="admin:messageConfig"[#if role.permissions?seq_contains("admin:messageConfig")] checked="checked"[/#if] />${message("admin.role.messageConfig")}
 						</label>
-						<label>
-							<input type="checkbox" name="permissions" value="admin:memberBank"[#if role.permissions?seq_contains("admin:memberBank")] checked="checked"[/#if] />${message("admin.role.memberBank")}
-						</label>
-						<label>
-							<input type="checkbox" name="permissions" value="admin:certification"[#if role.permissions?seq_contains("admin:certification")] checked="checked"[/#if] />${message("admin.role.certification")}
-						</label>
 					</span>
 				</td>
 			</tr>
@@ -285,9 +279,6 @@ $().ready(function() {
 						</label>
 						<label>
 							<input type="checkbox" name="permissions" value="admin:paymentMethod"[#if role.permissions?seq_contains("admin:paymentMethod")] checked="checked"[/#if] />${message("admin.role.paymentMethod")}
-						</label>
-						<label>
-							<input type="checkbox" name="permissions" value="admin:bank"[#if role.permissions?seq_contains("admin:bank")] checked="checked"[/#if] />${message("admin.role.bank")}
 						</label>
 						<label>
 							<input type="checkbox" name="permissions" value="admin:shippingMethod"[#if role.permissions?seq_contains("admin:shippingMethod")] checked="checked"[/#if] />${message("admin.role.shippingMethod")}

@@ -114,7 +114,7 @@ public class AuditingEntityListener {
 	 */
 	@SuppressWarnings("rawtypes")
 	private AuditorProvider<?> getAuditorProvider(Class<?> auditorClass) {
-		Assert.notNull(auditorClass,"");
+		Assert.notNull(auditorClass);
 
 		if (AUDITOR_PROVIDER_CACHE.containsKey(auditorClass)) {
 			return AUDITOR_PROVIDER_CACHE.get(auditorClass);

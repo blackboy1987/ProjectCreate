@@ -1,7 +1,7 @@
 /*
-
-
-
+ * Copyright 2005-2017 shopxx.net. All rights reserved.
+ * Support: http://www.shopxx.net
+ * License: http://www.shopxx.net/license
  */
 package com.igomall.service.impl;
 
@@ -41,8 +41,8 @@ public class SocialUserServiceImpl extends BaseServiceImpl<SocialUser, Long> imp
 	}
 
 	public void bindUser(User user, SocialUser socialUser, String uniqueId) {
-		Assert.notNull(socialUser,"");
-		Assert.hasText(uniqueId,"");
+		Assert.notNull(socialUser);
+		Assert.hasText(uniqueId);
 
 		if (!socialUser.getUniqueId().equals(uniqueId) || socialUser.getUser() != null) {
 			return;
