@@ -48,6 +48,10 @@
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
+			<mvc:mapping path="/api/**" />
+			<bean class="com.igomall.interceptor.CorsInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/cart/**" />
 			<mvc:mapping path="/order/**" />
 			<mvc:mapping path="/member/**" />
@@ -89,6 +93,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/payment/**" />
+			<mvc:exclude-mapping path="/api/**" />
 			<bean class="com.igomall.security.CsrfInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>

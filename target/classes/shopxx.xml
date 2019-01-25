@@ -123,4 +123,18 @@
 	<templateConfig id="registerBusinessSms" type="sms" name="商家注册" templatePath="shop/sms/register_business.ftl"/>  
 	<templateConfig id="approvalStoreSms" type="sms" name="店铺审核成功" templatePath="shop/sms/approval_store.ftl"/>  
 	<templateConfig id="failStoreSms" type="sms" name="店铺审核失败" templatePath="shop/sms/fail_store.ftl"/> 
+	
+	
+	
+	<template id="entity" type="entity" name="实体类" templatePath="/page/entity/entity.html" staticPath="/entity/${name}.java" />
+	<template id="dao" type="dao" name="DAO层" templatePath="/page/dao/dao.html" staticPath="/dao/${name}Dao.java" />
+	<template id="daoImpl" type="daoImpl" name="DAO实现层" templatePath="/page/dao/impl/daoImpl.html" staticPath="/dao/impl/${name}DaoImpl.java" />
+	<template id="service" type="service" name="service层" templatePath="/page/service/service.html" staticPath="/service/${name}Service.java" />
+	<template id="serviceImpl" type="serviceImpl" name="service实现层" templatePath="/page/service/impl/serviceImpl.html" staticPath="/service/impl/${name}ServiceImpl.java" />
+	<template id="controller" type="controller" name="controller层" templatePath="/page/controller/controller.html" staticPath="/controller/${name}Controller.java" />
+	
+	<template id="module" type="module" name="module层页面" templatePath="/page/html/module.html" staticPath="src/module/${name}.js" />
+	<template id="services" type="services" name="services层页面" templatePath="/page/html/services.html" staticPath="src/services/${name}.js" />
+	<template id="addPage" type="addPage" name="添加页面" templatePath="/page/html/add/index.html" staticPath="src/pages/${name}/Add/index.js" />
+	<template id="listPage" type="listPage" name="列表页面" templatePath="/page/html/list/index.html" staticPath="src/pages/${name}/List/index.js" />
 </shopxx>

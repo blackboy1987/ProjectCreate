@@ -5,6 +5,9 @@
  */
 package com.igomall.service;
 
+import java.util.List;
+
+import com.igomall.Template;
 import com.igomall.TemplateConfig;
 
 /**
@@ -14,6 +17,10 @@ import com.igomall.TemplateConfig;
  * @version 1.0
  */
 public interface TemplateService {
+	
+	List<Template> getAll();
+
+	Template get(String id);
 
 	/**
 	 * 读取模板文件内容
